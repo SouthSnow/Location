@@ -73,6 +73,8 @@ FileDriver.prototype.getNewFileId = function(newobj, callback) { //2
      console.log('About to route a request for save:' + err);
       callback(err); } 
 		else {
+    console.log('About to route a request for save:' + obj._id);
+
      callback(null,obj._id);
       } //3
 	});
@@ -86,23 +88,24 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
 
     this.getNewFileId({'content-type':ctype, 'ext':ext}, function(err,id) { //4
         if (err) { 
-          console.log('About to route a request for ' + err);
+          console.log('About to route a request for getNewFileId err ' + err);
 
           res.status(404).send(error);
          } 
         else { 	         
              var filename = id + ext; //5
              filePath = __dirname + '/uploads/' + filename; //6
- 
+             console.log('About to route a request for filePath :' + filePath );
+
 	           var writable = fs.createWriteStream(filePath); //7
 	           req.pipe(writable); //8
              req.on('end', function (){ //9
-                console.log('About to route a request for end' );
+                console.log('About to route a request for req  end' );
 
                 res.status(201).send({'_id':id});
              });               
              writable.on('error', function(err) { //10
-                console.log('About to route a request for ' + err);
+                console.log('About to route a request for writable err ' + err);
 
                 res.status(500).send(err);
              });
