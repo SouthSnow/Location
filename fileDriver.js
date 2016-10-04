@@ -107,7 +107,7 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
              var filename = id + ext; //5
              filePath = __dirname + '/uploads/' + filename; //6
              console.log('About to route a request for filePath :' + filePath );
-             res.status(201).send({'_id':id});
+             // res.status(201).send({'_id':id});
 
 	           var writable = fs.createWriteStream(filePath); //7
 	           req.pipe(writable); //8
@@ -130,9 +130,9 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
                }
              });
 
-             //  writable.on('finish', function() {
-             //    console.error('已完成所有写入。');
-             // });
+              writable.on('finish', function() {
+                console.error('已完成所有写入。');
+             });
         }
     });
 };
