@@ -129,8 +129,8 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
                  res.status(201).send({'_id':id});
                }
              });
-             
-              write.on('finish', function() {
+
+              writable.on('finish', function() {
                 console.error('已完成所有写入。');
              });
         }
