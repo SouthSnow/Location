@@ -122,7 +122,11 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
                if (err) {
                   console.log('About to route a request for writable err ' + err);
                   res.status(500).send(err);
+               } else {
+                  console.log('About to route a request for req  end _id: ' + id );
+                 res.status(201).send({'_id':id});
                }
+
              });
         }
     });
