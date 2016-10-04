@@ -24,7 +24,7 @@ var dbUrl = 'mongodb://' + mongoHost + ':' + mongoPort + '/MyDatabase';
 MongoClient.connect(dbUrl, function (err, db) { 
   fileDriver = new FileDriver(db); //<--
   collectionDriver = new CollectionDriver(db);
-  db.close();
+  // db.close();
 });
 
 app.use(express.static(path.join(__dirname, 'public')));
