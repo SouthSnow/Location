@@ -6,6 +6,8 @@ FileDriver = function(db) { //2
 };
 
 FileDriver.prototype.getCollection = function(callback) {
+  console.log('About to route a request for collection:');
+
   this.db.collection('files', function(error, file_collection) { //1
     if( error ) callback(error);
     else callback(null, file_collection);
@@ -55,6 +57,7 @@ FileDriver.prototype.save = function(obj, callback) { //1
       if( error ) callback(error)
       else {
         obj.created_at = new Date();
+        console.log('About to route a request for getCollection:');
         the_collection.insert(obj, function() {
           callback(null, obj);
         });
@@ -64,8 +67,12 @@ FileDriver.prototype.save = function(obj, callback) { //1
  
 FileDriver.prototype.getNewFileId = function(newobj, callback) { //2
 	this.save(newobj, function(err,obj) {
-		if (err) { callback(err); } 
-		else { callback(null,obj._id); } //3
+		if (err) { 
+     console.log('About to route a request for save:' + err);
+      callback(err); } 
+		else {
+     callback(null,obj._id);
+      } //3
 	});
 };
 
