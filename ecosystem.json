@@ -34,7 +34,7 @@
       "host" : "45.124.66.158",
       "ports" : "3001",
       "ref"  : "origin/master",
-      "repo" : "https://github.com/SouthSnow/Location.git",
+      "repo" : "https://SouthSnow@github.com/SouthSnow/Location.git",
       "ssh_options" : "StrictHostKeyChecking=no",
       "path" : "/home/pflnh/www/production",
       "post-deploy" : "npm install && pm2 startOrRestart ecosystem.json --env production"
@@ -43,7 +43,7 @@
       "user" : "pflnh",
       "host" : "45.124.66.158",
       "ref"  : "origin/master",
-      "repo" : "https://github.com/SouthSnow/Location.git",
+      "repo" : "https://SouthSnow@github.com/SouthSnow/Location.git",
       "path" : "/home/pflnh/www/development",
       "post-deploy" : "npm install && pm2 startOrRestart ecosystem.json --env dev",
       "env"  : {
