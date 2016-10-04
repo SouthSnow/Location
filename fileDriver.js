@@ -39,6 +39,7 @@ FileDriver.prototype.handleGet = function(req, res) { //1
             else {
                     if (thisFile) {
                          var filename = fileId + thisFile.ext; //3
+                         filename = filename ?: 'default.png';
                          var filePath = __dirname +'/uploads/'+ filename; //4
     	                 res.sendFile(filePath); //5
     	            } else {
