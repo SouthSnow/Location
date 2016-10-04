@@ -37,14 +37,17 @@ FileDriver.prototype.handleGet = function(req, res) { //1
                 res.status(404).send(error);
              }
             else {
-                    if (thisFile) {
+                  if (thisFile) {
                          var filename = fileId + thisFile.ext; //3
                          var filePath = __dirname +'/uploads/'+ filename; //4
                           fs.existsSync(filePath, function (exist) {
                              if (!exist) {
                                 filePath =  __dirname +'/uploads/' + 'default.png'
+                                console.log('About to route a request for sendFile:' + filePath);
+
                                 res.sendFile(filePath); //5
                              } else {
+                               console.log('About to route a request for sendFile:' + filePath);
                                res.sendFile(filePath); //5
                              }
                          });
