@@ -39,9 +39,15 @@ FileDriver.prototype.handleGet = function(req, res) { //1
             else {
                     if (thisFile) {
                          var filename = fileId + thisFile.ext; //3
-                         filename = filename ? filename : 'default.png';
                          var filePath = __dirname +'/uploads/'+ filename; //4
-    	                 res.sendFile(filePath); //5
+                          fs.existsSync(filePath, function (exist) {
+                             if (!exist) {
+                                filePath =  __dirname +'/uploads/' + 'default.png'
+                                res.sendFile(filePath); //5
+                             } else {
+                               res.sendFile(filePath); //5
+                             }
+                         });
     	            } else {
                      res.status(404).send('file not found');
                   }
