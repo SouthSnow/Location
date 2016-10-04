@@ -45,7 +45,9 @@ FileDriver.prototype.handleGet = function(req, res) { //1
                                 filePath =  __dirname +'/uploads/' + 'default.png'
                                 console.log('About to route a request for sendFile:' + filePath);
                                 res.sendFile(filePath); //5
+
                              } else {
+                                filePath =  __dirname +'/uploads/' + 'default.png'
                                console.log('About to route a request for sendFile:' + filePath);
                                res.sendFile(filePath); //5
                              }
