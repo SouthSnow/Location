@@ -59,6 +59,8 @@ FileDriver.prototype.save = function(obj, callback) { //1
         obj.created_at = new Date();
         console.log('About to route a request for getCollection:');
         the_collection.insert(obj, function() {
+         console.log('About to route a request for insert:' + obj);
+
           callback(null, obj);
         });
       }
