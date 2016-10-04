@@ -117,10 +117,10 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
                 res.status(201).send({'_id':id});
              });  
 
-             writable.on('drain', function() { // 写完后，继续读取
-                console.log('About to route a request for req  end' );
-                res.status(201).send({'_id':id});
-             });
+             // writable.on('drain', function() { // 写完后，继续读取
+             //    console.log('About to route a request for req  end' );
+             //    res.status(201).send({'_id':id});
+             // });
 
             // res.status(201).send({'_id':id});
 
@@ -139,9 +139,9 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
              //   }
              // });
 
-             //  writable.on('finish', function() {
-             //    console.error('已完成所有写入。');
-             // });
+              writable.on('finish', function() {
+                console.error('已完成所有写入。');
+             });
         }
     });
 };
