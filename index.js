@@ -5,28 +5,26 @@ var http = require('http'),
     Server = require('mongodb').Server,
     CollectionDriver = require('./collectionDriver').CollectionDriver,
     FileDriver = require('./fileDriver').FileDriver; //<---
+
+var bodyParser = require('body-parser');
  
 var app = express();
 app.set('port', process.env.PORT || 3001); 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-app.use(express.bodyParser()); // <-- add
+// app.use(bodyParser());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 var mongoHost = 'localhost';
 var mongoPort = 27017;
 var fileDriver;  //<--
 var collectionDriver;
- 
-var mongoClient = new MongoClient(new Server(mongoHost, mongoPort));
-mongoClient.open(function(err, mongoClient) {
-  if (!mongoClient) {
-      console.error("Error! Exiting... Must start MongoDB first");
-      process.exit(1);
-  }
-  var db = mongoClient.db("MyDatabase");
- 
+var dbUrl = 'mongodb://' + mongoHost + ':' + mongoPort + '/MyDatabase';
+MongoClient.connect(dbUrl, function (err, db) { 
   fileDriver = new FileDriver(db); //<--
   collectionDriver = new CollectionDriver(db);
+  db.close();
 });
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -51,13 +49,13 @@ app.get('/:collection', function(req, res, next) {
  
 function returnCollectionResults(req, res) {
     return function(error, objs) { //5
-        if (error) { res.send(400, error); }
+        if (error) { res.status(400).send(error); }
 	        else { 
                     if (req.accepts('html')) { //6
                         res.render('data',{objects: objs, collection: req.params.collection});
                     } else {
                         res.set('Content-Type','application/json');
-                        res.send(200, objs);
+                        res.status(200).send(objs);
                 }
         }
     }
@@ -69,11 +67,11 @@ app.get('/:collection/:entity', function(req, res) { //I
    var collection = params.collection;
    if (entity) {
        collectionDriver.get(collection, entity, function(error, objs) { //J
-          if (error) { res.send(400, error); }
-          else { res.send(200, objs); } //K
+          if (error) { res.send(error).status(400); }
+          else { res.send(objs).status(200); } //K
        });
    } else {
-      res.send(400, {error: 'bad url', url: req.url});
+      res.send({error: 'bad url', url: req.url}).status(400);
    }
 });
 
@@ -81,8 +79,8 @@ app.post('/:collection', function(req, res) { //A
     var object = req.body;
     var collection = req.params.collection;
     collectionDriver.save(collection, object, function(err,docs) {
-          if (err) { res.send(400, err); } 
-          else { res.send(201, docs); } //B
+          if (err) { res.status(400).send(err); } 
+          else { res.status(201).send(docs); } //B
      });
 });
 
@@ -92,12 +90,12 @@ app.put('/:collection/:entity', function(req, res) { //A
     var collection = params.collection;
     if (entity) {
        collectionDriver.update(collection, req.body, entity, function(error, objs) { //B
-          if (error) { res.send(400, error); }
-          else { res.send(200, objs); } //C
+          if (error) { res.status(400).send(error); }
+          else { res.status(200).send(objs); } //C
        });
    } else {
 	   var error = { "message" : "Cannot PUT a whole collection" }
-	   res.send(400, error);
+	   res.status(400).send(error);
    }
 });
 
@@ -107,12 +105,12 @@ app.delete('/:collection/:entity', function(req, res) { //A
     var collection = params.collection;
     if (entity) {
        collectionDriver.delete(collection, entity, function(error, objs) { //B
-          if (error) { res.send(400, error); }
-          else { res.send(200, objs); } //C 200 b/c includes the original doc
+          if (error) { res.status(400).send(error); }
+          else { res.status(200).send(objs); } //C 200 b/c includes the original doc
        });
    } else {
        var error = { "message" : "Cannot DELETE a whole collection" }
-       res.send(400, error);
+       res.status(400).send(error);
    }
 });
  
