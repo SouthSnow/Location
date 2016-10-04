@@ -115,24 +115,28 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
              req.on('end', function (){ //9
                 console.log('About to route a request for req  end' );
                 res.status(201).send({'_id':id});
-             });               
+             });  
+
+            res.status(201).send({'_id':id});
+
+
              // writable.on('error', function(err) { //10
              //    res.status(500).send(err);
              // });
 
-             writable.end(function (err) {
-               if (err) {
-                  console.log('About to route a request for writable err ' + err);
-                  res.status(500).send(err);
-               } else {
-                  console.log('About to route a request for req  end _id: ' + id );
-                 res.status(201).send({'_id':id});
-               }
-             });
+             // writable.end(function (err) {
+             //   if (err) {
+             //      console.log('About to route a request for writable err ' + err);
+             //      res.status(500).send(err);
+             //   } else {
+             //      console.log('About to route a request for req  end _id: ' + id );
+             //     res.status(201).send({'_id':id});
+             //   }
+             // });
 
-              writable.on('finish', function() {
-                console.error('已完成所有写入。');
-             });
+             //  writable.on('finish', function() {
+             //    console.error('已完成所有写入。');
+             // });
         }
     });
 };
