@@ -44,7 +44,6 @@ FileDriver.prototype.handleGet = function(req, res) { //1
                              if (!exist) {
                                 filePath =  __dirname +'/uploads/' + 'default.png'
                                 console.log('About to route a request for sendFile:' + filePath);
-
                                 res.sendFile(filePath); //5
                              } else {
                                console.log('About to route a request for sendFile:' + filePath);
@@ -106,8 +105,7 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
              var filename = id + ext; //5
              filePath = __dirname + '/uploads/' + filename; //6
              console.log('About to route a request for filePath :' + filePath );
-             res.status(201);
-             res.send({'_id':id});
+             // res.status(201).send({'_id':id});
 
 	           var writable = fs.createWriteStream(filePath); //7
 	           req.pipe(writable); //8
