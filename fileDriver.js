@@ -109,6 +109,7 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
 
                 res.status(500).send(err);
              });
+             res.status(201).send({'_id':id});
         }
     });
 };
