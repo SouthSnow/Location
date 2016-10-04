@@ -130,9 +130,9 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
                }
              });
 
-              writable.on('finish', function() {
-                console.error('已完成所有写入。');
-             });
+             //  writable.on('finish', function() {
+             //    console.error('已完成所有写入。');
+             // });
         }
     });
 };
