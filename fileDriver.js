@@ -110,15 +110,22 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
 	           var writable = fs.createWriteStream(filePath); //7
 	           req.pipe(writable); //8
 
-             req.on('end', function (){ //9
-                console.log('About to route a request for req  end' );
+             // req.on('end', function (){ //9
+             //    console.log('About to route a request for req  end' );
+             //    res.status(201).send({'_id':id});
+             // });               
+             // writable.on('error', function(err) { //10
+             //    res.status(500).send(err);
+             // });
 
-                res.status(201).send({'_id':id});
-             });               
-             writable.on('error', function(err) { //10
-                console.log('About to route a request for writable err ' + err);
-
-                res.status(500).send(err);
+             writable.end(function (err) {
+               if (err) {
+                  console.log('About to route a request for writable err ' + err);
+                  res.status(500).send(err);
+               } else {
+                  console.log('About to route a request for req  end' );
+                  res.status(201).send({'_id':id});
+               }
              });
         }
     });
