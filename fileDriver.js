@@ -117,7 +117,7 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
                 res.status(201).send({'_id':id});
              });  
 
-             writeStream.on('drain', function() { // 写完后，继续读取
+             writable.on('drain', function() { // 写完后，继续读取
                 console.log('About to route a request for req  end' );
                 res.status(201).send({'_id':id});
              });
