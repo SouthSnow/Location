@@ -40,7 +40,7 @@ FileDriver.prototype.handleGet = function(req, res) { //1
                     if (thisFile) {
                          var filename = fileId + thisFile.ext; //3
                          var filePath = './uploads/'+ filename; //4
-    	                 res.sendfile(filePath); //5
+    	                 res.sendFile(filePath); //5
     	            } else {
                      res.status(404).send('file not found');
                   }
