@@ -117,7 +117,7 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
                 res.status(201).send({'_id':id});
              });  
 
-            res.status(201).send({'_id':id});
+            // res.status(201).send({'_id':id});
 
 
              // writable.on('error', function(err) { //10
