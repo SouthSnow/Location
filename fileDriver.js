@@ -32,8 +32,7 @@ FileDriver.prototype.handleGet = function(req, res) { //1
     if (fileId) {
         this.get(fileId, function(error, thisFile) { //2
             if (error) { 
-                res.send(error);
-                res.status(404);
+                res.status(404).send(error);
              }
             else {
                     if (thisFile) {
@@ -41,14 +40,12 @@ FileDriver.prototype.handleGet = function(req, res) { //1
                          var filePath = './uploads/'+ filename; //4
     	                 res.sendfile(filePath); //5
     	            } else {
-                     res.send('file not found');
-                     res.status(404);
+                     res.status(404).send('file not found');
                   }
             }
         });        
     } else {
-	    res.send('file not found');
-      res.status(404);
+	    res.status(404).send('file not found');
     }
 }
 
@@ -78,8 +75,7 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
     if (ext) {ext = '.' + ext; } else {ext = ''};
     this.getNewFileId({'content-type':ctype, 'ext':ext}, function(err,id) { //4
         if (err) { 
-          res.send(error);
-          res.status(404);
+          res.status(404).send(error);
          } 
         else { 	         
              var filename = id + ext; //5
@@ -88,12 +84,10 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
 	           var writable = fs.createWriteStream(filePath); //7
 	           req.pipe(writable); //8
              req.on('end', function (){ //9
-                res.send({'_id':id});
-                res.status(201);
+                res.status(201).send({'_id':id});
              });               
              writable.on('error', function(err) { //10
-                res.send(err);
-                res.status(500);
+                res.status(500).send(err);
              });
         }
     });
