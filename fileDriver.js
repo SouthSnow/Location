@@ -73,8 +73,12 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
     var ctype = req.get("content-type"); //2
     var ext = ctype.substr(ctype.indexOf('/')+1); //3
     if (ext) {ext = '.' + ext; } else {ext = ''};
+    console.log('About to route a request for ');
+
     this.getNewFileId({'content-type':ctype, 'ext':ext}, function(err,id) { //4
         if (err) { 
+          console.log('About to route a request for ' + err);
+
           res.status(404).send(error);
          } 
         else { 	         
@@ -84,9 +88,13 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
 	           var writable = fs.createWriteStream(filePath); //7
 	           req.pipe(writable); //8
              req.on('end', function (){ //9
+                console.log('About to route a request for end' );
+
                 res.status(201).send({'_id':id});
              });               
              writable.on('error', function(err) { //10
+                console.log('About to route a request for ' + err);
+
                 res.status(500).send(err);
              });
         }
