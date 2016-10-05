@@ -212,16 +212,16 @@ function upload(response, request, filePath, fileId) {
 
   var form = new formidable.IncomingForm()
   form.parse(request, function (error, fields, files) {
-    console.log('parsing done' + files.upload.path)
+    console.log('parsing done' + files)
 
     if (error) {
       response.status(404).send('file no find'); 
       console.log('parsing done' + error)
     } else {
-      fs.renameSync(files.upload.path, filePath, function (error) {
+      fs.renameSync(files, filePath, function (error) {
         if (error) {
           fs.unlink(filePath)
-          fs.rename(files.upload.path, filePath)
+          fs.rename(files, filePath)
         }
       })
       response.status(201).send({'_id':fileId});
