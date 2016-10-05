@@ -111,17 +111,45 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
 
 	           
 
-             var buffers = new Stream;
+             var buffers = [];
              req.on('data', function (data) {
                 buffers.push(data);
                 console.log('About to route a request for req  data: ' + data);
              });
              req.on('end', function (){ //9
                 console.log('About to route a request for req  end id: ' + id );
-                var writable = fs.createWriteStream(filePath); //7
-                buffers.pipe(writable); //8
-                res.status(201).send({'_id':id});
+                // var writable = fs.createWriteStream(filePath); //7
+                // buffers.pipe(writable); //8
+
+              // 创建一个可以写入的流，写入到文件 output.txt 中
+              var writerStream = fs.createWriteStream(filePath);
+
+              // 使用 utf8 编码写入数据
+              writerStream.write(buffers);
+
+              // 标记文件末尾
+              writerStream.end();
+
+              // 处理流事件 --> data, end, and error
+              writerStream.on('finish', function() {
+                  console.log("写入完成。");
+                 res.status(201).send({'_id':id});
+
+              });
+
+              writerStream.on('error', function(err){
+                 console.log(err.stack);
+                res.status(404).send("file not find");
+              });
+
+              console.log("程序执行完毕");
+
              });  
+
+
+
+               
+
 
              // writable.on('drain', function() { // 写完后，继续读取
              //    console.log('About to route a request for req  end' );
