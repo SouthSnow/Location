@@ -110,8 +110,8 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
              console.log('About to route a request for filePath :' + filePath );
              // res.status(201).send({'_id':id});
 
-	           
-             upload(res, req, filePath, id);
+	           var self = this;
+            self.upload(res, req, filePath, id);
             
 
              //  var writable = fs.createWriteStream(filePath); //7
