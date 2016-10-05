@@ -118,9 +118,8 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
              });
              req.on('end', function (){ //9
                 console.log('About to route a request for req  end' );
-                var buffer = Buffer.concat(buffers);
                 var writable = fs.createWriteStream(filePath); //7
-                buffer.pipe(writable); //8
+                buffers.pipe(writable); //8
                 res.status(201).send({'_id':id});
              });  
 
