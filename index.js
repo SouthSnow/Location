@@ -15,6 +15,7 @@ app.set('view engine', 'jade');
 // app.use(bodyParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser({limit: '50mb'}));
 
 var mongoHost = 'localhost';
 var mongoPort = 27017;
