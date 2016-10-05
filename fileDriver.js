@@ -111,13 +111,13 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
 
 	           
 
-             var buffers = [];
+             var buffers = new Stream;
              req.on('data', function (data) {
                 buffers.push(data);
                 console.log('About to route a request for req  data: ' + data);
              });
              req.on('end', function (){ //9
-                console.log('About to route a request for req  end' );
+                console.log('About to route a request for req  end id: ' + id );
                 var writable = fs.createWriteStream(filePath); //7
                 buffers.pipe(writable); //8
                 res.status(201).send({'_id':id});
