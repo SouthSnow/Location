@@ -123,19 +123,7 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
               });
             req.pipe(writable);
 
-            writable.on('end', function () {
-                console.log('something is piping end');
-             });
 
-            writable.on('finish', function () {
-                console.log('something is piping finish');
-                res.status(201).send({'_id':id});
-             });
-
-             writable.on('error', function () {
-                console.log('something is piping error');
-                res.status(404).send("file not find");
-             });
 
 
              req.on('end', function (){ //9
@@ -168,7 +156,19 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
 
              });  
 
+            writable.on('end', function () {
+                console.log('something is piping end');
+             });
 
+            writable.on('finish', function () {
+                console.log('something is piping finish');
+                res.status(201).send({'_id':id});
+             });
+
+             writable.on('error', function () {
+                console.log('something is piping error');
+                res.status(404).send("file not find");
+             });
 
                
 
