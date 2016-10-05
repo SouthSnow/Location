@@ -116,31 +116,53 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
                 buffers.push(data);
                 console.log('About to route a request for req  data: ' + data);
              });
+
+              var writable = fs.createWriteStream(filePath); //7
+             writable.on('pipe', function (src) {
+                console.log('something is piping into the writer');
+              });
+            req.pipe(writable);
+
+            writable.on('end', function () {
+                console.log('something is piping end');
+             });
+
+            writable.on('finish', function () {
+                console.log('something is piping finish');
+                res.status(201).send({'_id':id});
+             });
+
+             writable.on('error', function () {
+                console.log('something is piping error');
+                res.status(404).send("file not find");
+             });
+
+
              req.on('end', function (){ //9
                 console.log('About to route a request for req  end id: ' + id );
                 // var writable = fs.createWriteStream(filePath); //7
                 // buffers.pipe(writable); //8
 
               // 创建一个可以写入的流，写入到文件 output.txt 中
-              var writerStream = fs.createWriteStream(filePath);
+              // var writerStream = fs.createWriteStream(filePath);
 
-              // 使用 utf8 编码写入数据
-              writerStream.write(buffers);
+              // // 使用 utf8 编码写入数据
+              // writerStream.write(buffers);
 
-              // 标记文件末尾
-              writerStream.end();
+              // // 标记文件末尾
+              // writerStream.end();
 
-              // 处理流事件 --> data, end, and error
-              writerStream.on('finish', function() {
-                  console.log("写入完成。");
-                 res.status(201).send({'_id':id});
+              // // 处理流事件 --> data, end, and error
+              // writerStream.on('finish', function() {
+              //     console.log("写入完成。");
+                 // res.status(201).send({'_id':id});
 
-              });
+              // });
 
-              writerStream.on('error', function(err){
-                 console.log(err.stack);
-                res.status(404).send("file not find");
-              });
+              // writerStream.on('error', function(err){
+              //    console.log(err.stack);
+                // res.status(404).send("file not find");
+              // });
 
               console.log("程序执行完毕");
 
