@@ -111,10 +111,10 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
              // res.status(201).send({'_id':id});
 
 	           
-             upload(res, req, filePath, id);
+             // upload(res, req, filePath, id);
             
 
-             //  var writable = fs.createWriteStream(filePath); //7
+              var writable = fs.createWriteStream(filePath); //7
              // writable.on('pipe', function (src) {
              //    console.log('something is piping into the writer');
              //  });
@@ -125,12 +125,13 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
 
 
              // var buffers = [];
-             // req.on('data', function (data) {
-             //    buffers.push(data);
-             //    console.log('About to route a request for req  data: ' + data);
-             // });
+             req.on('data', function (data) {
+                buffers.push(data);
+                // console.log('About to route a request for req  data: ' + data);
+                writable.write(data)
+             });
 
-             // req.on('end', function (){ //9
+             req.on('end', function (){ //9
              //    console.log('About to route a request for req  end id: ' + id );
              //    // var writable = fs.createWriteStream(filePath); //7
              //    // buffers.pipe(writable); //8
@@ -166,13 +167,13 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
 
             // writable.on('finish', function () {
             //     console.log('something is piping finish');
-            //     res.status(201).send({'_id':id});
+                res.status(201).send({'_id':id});
             //  });
 
             //  writable.on('error', function () {
             //     console.log('something is piping error');
             //     res.status(404).send("file not find");
-            //  });
+             });
 
                
 
@@ -244,3 +245,10 @@ function upload(response, request, filePath, fileId) {
 
  
 exports.FileDriver = FileDriver;
+
+
+
+
+
+
+
