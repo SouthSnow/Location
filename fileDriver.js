@@ -114,6 +114,7 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
              var buffers = [];
              req.on('data', function (data) {
                 buffers.push(data);
+                console.log('About to route a request for req  data: ' + data);
              });
              req.on('end', function (){ //9
                 console.log('About to route a request for req  end' );
