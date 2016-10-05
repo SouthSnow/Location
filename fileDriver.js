@@ -211,6 +211,17 @@ function upload(response, request, filePath, fileId) {
   console.log("Request handler 'upload' was called")
 
   var form = new formidable.IncomingForm()
+  form.encoding = 'binary';
+
+ form.addListener('file', function(name, file) {
+    console.log('addListener file: ' + file + "   name: " + name);
+  });
+
+  form.addListener('end', function() {
+    console.log('addListener end');
+    response.status(201).send({'_id':fileId});
+  });
+
   form.parse(request, function (error, fields, files) {
     console.log('parsing done' + files.file.path)
 
