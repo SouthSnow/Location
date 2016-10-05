@@ -118,18 +118,18 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
              // writable.on('pipe', function (src) {
              //    console.log('something is piping into the writer');
              //  });
-            // req.pipe(writable);
+            req.pipe(writable);
 
 
 
 
 
              // var buffers = [];
-             req.on('data', function (data) {
-                // buffers.push(data);
-                // console.log('About to route a request for req  data: ' + data);
-                writable.write(data)
-             });
+             // req.on('data', function (data) {
+             //    // buffers.push(data);
+             //    console.log('About to route a request for req  data: ' + data);
+             //    writable.write(data)
+             // });
 
              req.on('end', function (){ //9
                 console.log('About to route a request for req  end id: ' + id );
@@ -168,11 +168,11 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
             // writable.on('finish', function () {
             //     console.log('something is piping finish');
                 res.status(201).send({'_id':id});
-            //  });
+             });
 
-            //  writable.on('error', function () {
-            //     console.log('something is piping error');
-            //     res.status(404).send("file not find");
+             writable.on('error', function () {
+                console.log('something is piping error');
+                res.status(404).send("file not find");
              });
 
                
