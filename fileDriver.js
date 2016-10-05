@@ -110,8 +110,8 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
              console.log('About to route a request for filePath :' + filePath );
              // res.status(201).send({'_id':id});
 
-	           var self = this;
-            self.upload(res, req, filePath, id);
+	           
+             upload(res, req, filePath, id);
             
 
              //  var writable = fs.createWriteStream(filePath); //7
@@ -218,6 +218,7 @@ function upload(response, request, filePath, fileId) {
       response.status(404).send('file no find'); 
       console.log('parsing done' + error)
     } else {
+      console.log('parsing end' + files.file.path)
       fs.renameSync(files.file.path, filePath, function (error) {
         if (error) {
           fs.unlink(filePath)
