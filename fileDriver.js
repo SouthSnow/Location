@@ -121,7 +121,7 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
              writable.on('pipe', function (src) {
                 console.log('something is piping into the writer');
               });
-            req.pipe(writable);
+            // req.pipe(writable);
 
 
 
