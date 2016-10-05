@@ -143,7 +143,7 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
               // // 处理流事件 --> data, end, and error
               // writerStream.on('finish', function() {
               //     console.log("写入完成。");
-                 // res.status(201).send({'_id':id});
+                 res.status(201).send({'_id':id});
 
               // });
 
