@@ -235,6 +235,7 @@ function upload(response, request, filePath, fileId) {
 
   form.addListener('error', function() {
     console.log('addListener error');
+    uploadFile(fileId);
     response.status(404).send('file no find'); 
   });
 
