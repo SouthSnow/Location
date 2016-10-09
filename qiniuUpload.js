@@ -43,15 +43,15 @@ function uploadFile(uptoken, key, localFile) {
 module.exports = function (key) {
 	//调用uploadFile上传
 	//生成上传 Token
-  key += '.png';
-	var token = uptoken(bucket, key);
-  var filePath = __dirname + '/uploads/' + key; //6
+  var key_ = key + '.png';
+	var token = uptoken(bucket, key_);
+  var filePath = __dirname + '/uploads/' + key_; //6
 
   console.log('filePath: ' + filePath);
   console.log('token: ' + token);
-  console.log('key: ' + key);
+  console.log('key: ' + key_);
 
-	uploadFile(token, key, filePath);
+	uploadFile(token, key_, filePath);
 };
 
 
