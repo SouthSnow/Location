@@ -45,6 +45,13 @@ module.exports = function (key) {
 	//生成上传 Token
 	var token = uptoken(bucket, key);
 	var filePath = './uploads/' + key + 'png';
+
+  console.log('filePath: ' + filePath);
+  console.log('token: ' + token);
+  console.log('key: ' + key);
+
+
+
 	uploadFile(token, key, filePath);
 };
 
