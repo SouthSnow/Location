@@ -52,7 +52,7 @@ module.exports = function (key) {
 
 
 
-	uploadFile(token, key, filePath);
+	// uploadFile(token, key, filePath);
 };
 
 
