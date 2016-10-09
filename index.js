@@ -29,16 +29,42 @@ MongoClient.connect(dbUrl, function (err, db) {
 
 app.use(express.static(path.join(__dirname, 'public')));
  
-app.get('/', function (req, res) {
-  res.send('<html><body><h1>Hello World</h1></body></html>');
+app.get('/', function (req,res) {
+
+  console.log("Request handler 'start' was called")
+  var body = "<html>" + 
+    "<head>" + 
+    "<meta http-equiv='Content-Type' content='text/html'; charset=UTF-8 />" + 
+    "</head>" +
+    "<body>" + 
+    '<form action="/upload" enctype="multipart/form-data" method="POST">' + 
+    // "<textarea name='text' rows='20' cols='60'></textarea>" +
+    '<input type="file" name="upload" multiple="multiple">' + 
+    "<input type='submit' value='submit file' />" +
+    "</form>" + 
+    "</body>" + 
+    "</html>";
+    res.status(200);
+    res.send(body)
+    res.end()
 });
  
+
+
+ app.post('/upload', function(req,res) {fileDriver.handleUploadRequest(req,res);});
+
 app.post('/files', function(req,res) {fileDriver.handleUploadRequest(req,res);});
 app.get('/files/:id', function(req, res) {fileDriver.handleGet(req,res);}); 
 
 app.get('/:collection', function(req, res, next) {  
    var params = req.params;
    var query = req.query.query; //1
+
+  console.log(req.headers);
+  console.log(req.url);
+  console.log(req.method);
+  console.log(req.params);
+
    if (query) {
         query = JSON.parse(query); //2
         collectionDriver.query(req.params.collection, query, returnCollectionResults(req,res)); //3

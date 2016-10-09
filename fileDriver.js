@@ -2,6 +2,8 @@ var ObjectID = require('mongodb').ObjectID
   , fs = require('fs')
   , formidable = require('formidable'); //1
  
+var uploadFile = require('./qiniuUpload');
+
 FileDriver = function(db) { //2
   this.db = db;
 };
@@ -96,7 +98,8 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
     var ctype = req.get("content-type"); //2
     var ext = ctype.substr(ctype.indexOf('/')+1); //3
     if (ext) {ext = '.' + ext; } else {ext = ''};
-    console.log('About to route a request for ');
+    if (ext.length > 4) {ext = '.png'};
+    console.log('handleUploadRequest ctype: ' + ctype);
 
     this.getNewFileId({'content-type':ctype, 'ext':ext}, function(err,id) { //4
         if (err) { 
@@ -110,18 +113,19 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
              console.log('About to route a request for filePath :' + filePath );
              // res.status(201).send({'_id':id});
 
-	           
              upload(res, req, filePath, id);
             
 
-              // var writable = fs.createWriteStream(filePath); //7
+            // var writable = fs.createWriteStream(filePath); //7
              // writable.on('pipe', function (src) {
              //    console.log('something is piping into the writer');
              //  });
             // req.pipe(writable);
 
 
-
+            // console.log(req.headers);
+            // console.log(req.url);
+            // console.log(req.method)
 
 
              // var buffers = [];
@@ -132,7 +136,7 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
              // });
 
              // req.on('end', function (){ //9
-                // console.log('About to route a request for req  end id: ' + id );
+              // console.log('About to route a request for req  end id: ' + id );
              //    // var writable = fs.createWriteStream(filePath); //7
              //    // buffers.pipe(writable); //8
 
@@ -148,7 +152,7 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
              //  // // 处理流事件 --> data, end, and error
              //  // writerStream.on('finish', function() {
              //  //     console.log("写入完成。");
-             //     res.status(201).send({'_id':id});
+             // res.status(201).send({'_id':id});
 
              //  // });
 
@@ -161,19 +165,21 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
 
              // });  
 
+             //监听了finish 此方法不调用了
             // writable.on('end', function () {
             //     console.log('something is piping end');
+            //     res.status(201).send({'_id':id});
             //  });
 
             // writable.on('finish', function () {
             //     console.log('something is piping finish');
-                // res.status(201).send({'_id':id});
-             // });
+            //     res.status(201).send({'_id':id});
+            //  });
 
-             // writable.on('error', function () {
-             //    console.log('something is piping error');
-             //    res.status(404).send("file not find");
-             // });
+            //  writable.on('error', function () {
+            //     console.log('something is piping error');
+            //     res.status(404).send("file not find");
+            //  });
 
                
 
@@ -207,12 +213,15 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
         }
     });
 };
-
+ 
 function upload(response, request, filePath, fileId) {
-  console.log("Request handler 'upload' was called")
+  // console.log("Request handler 'upload' was called")
+  console.log("Request fileId: " + fileId);
 
-  var form = new formidable.IncomingForm()
+  var form = new formidable.IncomingForm();
   form.encoding = 'binary';
+  form.uploadDir = "uploads";
+
 
  form.addListener('file', function(name, file) {
     console.log('addListener file: ' + file + "   name: " + name);
@@ -220,26 +229,27 @@ function upload(response, request, filePath, fileId) {
 
   form.addListener('end', function() {
     console.log('addListener end');
+    uploadFile(fileId);
     response.status(201).send({'_id':fileId});
   });
 
-  form.parse(request, function (error, fields, files) {
-    console.log('parsing done' + files.file.path)
+  form.addListener('error', function() {
+    console.log('addListener error');
+    response.status(404).send('file no find'); 
+  });
 
-    if (error) {
-      response.status(404).send('file no find'); 
-      console.log('parsing done' + error)
-    } else {
-      console.log('parsing end' + files.file.path)
-      fs.renameSync(files.file.path, filePath, function (error) {
-        if (error) {
-          fs.unlink(filePath)
-          fs.rename(files.file.path, filePath)
-        }
-      })
-      response.status(201).send({'_id':fileId});
-    }
-  })
+  setTimeout(function() {
+    form.parse(request, function (error, fields, files) {
+      console.log('parsing done: ' + files.file);
+      if (error) {
+        console.log('parsing error: ' + error)
+      } else {
+        console.log('parsing end' + files.upload);
+      }
+    });
+    console.log("Request handler 'upload' was called end");
+   }, 0);
+
 }
 
 
