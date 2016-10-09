@@ -132,7 +132,7 @@ app.delete('/:collection/:entity', function(req, res) { //A
     if (entity) {
        collectionDriver.delete(collection, entity, function(error, objs) { //B
           if (error) { res.status(400).send(error); }
-          else { res.status(200).send(objs); } //C 200 b/c includes the original doc
+          else { res.status(200).send({'msg': "删除成功locationId: " + entity}); } //C 200 b/c includes the original doc
        });
    } else {
        var error = { "message" : "Cannot DELETE a whole collection" }
