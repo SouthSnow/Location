@@ -15,7 +15,7 @@ var bucket = 'pflnh20161009';
 //构建上传策略函数，设置回调的url以及需要回调给业务服务器的数据
 function uptoken(bucket, key) {
   var putPolicy = new qiniu.rs.PutPolicy(bucket+":"+key);
-  putPolicy.callbackUrl = 'http://45.124.66.158/callback';
+  putPolicy.callbackUrl = 'http://45.124.66.158:3001/callback';
   putPolicy.callbackBody = 'filename=$(fname)&filesize=$(fsize)';
   return putPolicy.token();
 }
