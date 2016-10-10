@@ -246,7 +246,6 @@ function upload(response, request, filePath, fileId) {
   
  form.parse(request, function (error, fields, files) {
 
-      response.send({'fields': fields, 'files': files});
 
       var srcfilepath = files.path;
         if (srcfilepath) { 
@@ -266,6 +265,10 @@ function upload(response, request, filePath, fileId) {
         } else {
           console.log('parsing end' + files.upload);
         }
+
+
+    response.send({'fields': fields, 'files': files});
+
   });
 
   console.log("Request handler 'upload' was called end");
