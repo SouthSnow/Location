@@ -2,6 +2,7 @@ var http = require('http'),
     express = require('express'),
     path = require('path'),
     url = require('url'),
+    querystring = require('querystring'),
     MongoClient = require('mongodb').MongoClient,
     Server = require('mongodb').Server,
     CollectionDriver = require('./collectionDriver').CollectionDriver,
@@ -72,7 +73,9 @@ function parserequest(req) {
   alert('req.route: ' + stringify(req.route));
   alert('============================================');
   alert('url pathname: ' + url.parse(req.url).pathname);
-  alert('url query: ' + url.parse(req.url).query);
+  alert('url query: ' + url.parse(req.url, true).query);
+  alert('url querystring: ' + querystring.parse(url.parse(req.url).query));
+
 }
 
 app.get('/key/:key', function(req, res) {
