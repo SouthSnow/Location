@@ -233,20 +233,20 @@ function upload(response, request, filePath, fileId) {
 
   form.addListener('end', function() {
     console.log('addListener end');
-    // uploadFile(fileId);
-    // response.status(201).send({'_id':fileId});
+    uploadFile(fileId);
+    response.status(201).send({'_id':fileId});
   });
 
   form.addListener('error', function() {
     console.log('addListener error');
-    // uploadFile(fileId);
+    uploadFile(fileId);
     response.status(404).send('file no find'); 
   });
 
   
  form.parse(request, function (error, fields, files) {
 
-     var obj = JSON.stringify(files);
+     // var obj = JSON.stringify(files);
 
       var srcfilepath = files.files.path;
         if (srcfilepath) { 
@@ -266,8 +266,8 @@ function upload(response, request, filePath, fileId) {
         } else {
           console.log('parsing end' + files.upload);
         }
-    console.log('files: ' + obj);
-    response.send({'fields': fields, 'files': files});
+    // console.log('files: ' + obj);
+    // response.send({'fields': fields, 'files': files});
 
   });
 
