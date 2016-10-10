@@ -57,6 +57,9 @@ function alert(msg) {
   console.log(msg);
 }
 
+function stringify(obj) {
+  return JSON.stringify(obj);
+}
 
 app.get('/key/:key', function(req, res) {
     var params = req.params;
@@ -72,14 +75,14 @@ app.get('/key/:key', function(req, res) {
     }
 });
 
+
+
 app.post('/key/:key', function(req, res) {
-  alert('req.body: ' + req.body);
-  alert('req.params: ' + req.params);
+  alert('req.body: ' + stringify(req.body));
+  alert('req.params: ' + stringify(req.params));
   alert('req.url: ' + req.url);
-  alert('req.query: ' + req.query);
-  alert('req.route: ' + req.route);
-
-
+  alert('req.query: ' + stringify(req.query));
+  alert('req.route: ' + stringify(req.route));
 });
 
 
