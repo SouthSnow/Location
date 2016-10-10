@@ -224,7 +224,7 @@ function upload(response, request, filePath, fileId) {
 
   var form = new formidable.IncomingForm();
   form.encoding = 'binary';
-  form.uploadDir = "uploads";
+  // form.uploadDir = "uploads";
 
 
  form.addListener('file', function(name, file) {
@@ -233,29 +233,29 @@ function upload(response, request, filePath, fileId) {
 
   form.addListener('end', function() {
     console.log('addListener end');
-    uploadFile(fileId);
-    response.status(201).send({'_id':fileId});
+    // uploadFile(fileId);
+    // response.status(201).send({'_id':fileId});
   });
 
   form.addListener('error', function() {
     console.log('addListener error');
-    uploadFile(fileId);
+    // uploadFile(fileId);
     response.status(404).send('file no find'); 
   });
 
   setTimeout(function() {
     form.parse(request, function (error, fields, files) {
 
-      // response.status(201).send({'fields': fields, 'files': files});
+      response.status(201).send({'fields': fields, 'files': files});
 
-      var srcfilepath = __dirname + files.path;
-      fs.rename(srcfilepath, filePath, function (error) {
-        if (error) {
-          console.log('rename error: ' + error);
-        } else {
-         console.log('rename success filePath: ' + filePath);
-        }
-      });
+      // var srcfilepath = __dirname + files.path;
+      // fs.rename(srcfilepath, filePath, function (error) {
+      //   if (error) {
+      //     console.log('rename error: ' + error);
+      //   } else {
+      //    console.log('rename success filePath: ' + filePath);
+      //   }
+      // });
 
       console.log('parsing done: ' + files.file);
       if (error) {
