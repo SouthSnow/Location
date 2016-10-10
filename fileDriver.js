@@ -266,7 +266,7 @@ function upload(response, request, filePath, fileId) {
           console.log('parsing end' + files.upload);
         }
 
-
+    console.log('files: ' + files);
     response.send({'fields': fields, 'files': files});
 
   });
