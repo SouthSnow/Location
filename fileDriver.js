@@ -233,13 +233,13 @@ function upload(response, request, filePath, fileId) {
 
   form.addListener('end', function() {
     console.log('addListener end');
-    uploadFile(fileId);
+    // uploadFile(fileId);
     // response.status(201).send({'_id':fileId});
   });
 
   form.addListener('error', function() {
     console.log('addListener error');
-    uploadFile(fileId);
+    // uploadFile(fileId);
     response.status(404).send('file no find'); 
   });
 
@@ -249,13 +249,13 @@ function upload(response, request, filePath, fileId) {
       response.status(201).send(util.inspect({fields: fields, files: files}));
 
 
-      fs.rename("logo", filePath, function (error) {
-        if (error) {
-          console.log('rename error: ' + error);
-        } else {
-         console.log('rename success filePath: ' + filePath);
-        }
-      });
+      // fs.rename("logo", filePath, function (error) {
+      //   if (error) {
+      //     console.log('rename error: ' + error);
+      //   } else {
+      //    console.log('rename success filePath: ' + filePath);
+      //   }
+      // });
 
       console.log('parsing done: ' + files.file);
       if (error) {
