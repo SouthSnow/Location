@@ -58,7 +58,6 @@ app.get('/key/:key', function(req, res) {
     var params = req.params;
     var key = params.key;
 
-  console.log(req.url);
   console.log(key);
   console.log(req.params);
 
