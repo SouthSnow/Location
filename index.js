@@ -102,6 +102,13 @@ app.get('/key/:key', function(req, res) {
 
 app.post('/key/:key', function(req, res) {
   parserequest(req);
+  var params = req.params;
+  var key = params.key;
+  if (key) {
+    qiniu.download(req, res, key);
+  } else {
+    res.status(400).send('error key');
+  }
 });
 
 
