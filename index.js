@@ -54,6 +54,21 @@ app.get('/', function (req,res) {
  
 
 
+app.get('/key/:key', function(req, res) {
+    var params = req.params;
+    var key = params.key;
+
+  console.log(req.url);
+  console.log(key);
+  console.log(req.params);
+
+    if (key) {
+      qiniu.download(req, res, key);
+    } else {
+      res.status(400).send('error key');
+    }
+});
+
  app.post('/upload', function(req,res) {fileDriver.handleUploadRequest(req,res);});
 
 app.post('/files', function(req,res) {fileDriver.handleUploadRequest(req,res);});
@@ -104,20 +119,7 @@ app.get('/:collection/:entity', function(req, res) { //I
    }
 });
 
-app.get('/key/:key', function(req, res) {
-    var params = req.params;
-    var key = params.key;
 
-  console.log(req.url);
-  console.log(key);
-  console.log(req.params);
-
-    if (key) {
-      qiniu.download(req, res, key);
-    } else {
-      res.status(400).send('error key');
-    }
-});
 
 app.post('/:collection', function(req, res) { //A
     var object = req.body;
