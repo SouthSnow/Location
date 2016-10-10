@@ -108,7 +108,7 @@ app.get('/:key/:key', function(req, res) {
     var params = req.params;
     var key = params.key;
     if (key) {
-      qiniu(req, res, key);
+      qiniu.download(req, res, key);
     } else {
       res.status(400).send('error key');
     }
