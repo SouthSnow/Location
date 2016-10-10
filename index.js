@@ -62,9 +62,26 @@ function stringify(obj) {
   return JSON.stringify(obj);
 }
 
+function parserequest(req) {
+  alert('req.headers: ' + stringify(req.headers));
+  alert('req.body: ' + stringify(req.body));
+  alert('req.params: ' + stringify(req.params));
+  alert('req.url: ' + req.url);
+  alert('req.originalUrl: ' + req.originalUrl);
+  alert('req.query: ' + stringify(req.query));
+  alert('req.route: ' + stringify(req.route));
+  alert('============================================');
+  alert('url pathname: ' + url.parse(req.url).pathname);
+  alert('url query: ' + url.parse(req.url).query);
+}
+
 app.get('/key/:key', function(req, res) {
     var params = req.params;
     var key = params.key;
+
+
+  parserequest(req);
+
 
   console.log(key);
   console.log(req.params);
@@ -78,15 +95,10 @@ app.get('/key/:key', function(req, res) {
 
 
 
+
+
 app.post('/key/:key', function(req, res) {
-  alert('req.body: ' + stringify(req.body));
-  alert('req.params: ' + stringify(req.params));
-  alert('req.url: ' + req.url);
-  alert('req.query: ' + stringify(req.query));
-  alert('req.route: ' + stringify(req.route));
-  alert('============================================');
-  alert('url pathname: ' + url.parse(req.url).pathname);
-  alert('url query: ' + url.parse(req.url).query);
+  parserequest(req);
 });
 
 
