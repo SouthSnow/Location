@@ -244,7 +244,7 @@ function upload(response, request, filePath, fileId) {
   });
 
   
- setTimeout(form.parse(request, function (error, fields, files) {
+ form.parse(request, function (error, fields, files) {
 
       response.send({'fields': fields, 'files': files});
 
@@ -266,9 +266,9 @@ function upload(response, request, filePath, fileId) {
         } else {
           console.log('parsing end' + files.upload);
         }
-    }), 500);
+  });
 
-    console.log("Request handler 'upload' was called end");
+  console.log("Request handler 'upload' was called end");
    
 
 }
