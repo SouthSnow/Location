@@ -59,7 +59,7 @@ exports.upload = function (key) {
 
 
 
-function download(key) {
+function download(req,res,key) {
   // body...
   //构建私有空间的链接
   url = 'http://oeruk4rwa.bkt.clouddn.com/' + key;
@@ -68,6 +68,13 @@ function download(key) {
   var downloadUrl = policy.makeRequest(url);
   //打印下载的url
   console.log(downloadUrl);
+
+  if (downloadUrl) {
+    res.status(201).send({"imgUrl": downloadUrl});
+  } else {
+    res.status(404).send('bad URL');
+  }
+
 }
 
 exports.download = download;

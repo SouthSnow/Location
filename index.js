@@ -6,6 +6,9 @@ var http = require('http'),
     CollectionDriver = require('./collectionDriver').CollectionDriver,
     FileDriver = require('./fileDriver').FileDriver; //<---
 
+var qiniu = require('./qiniuUpload');
+
+
 var bodyParser = require('body-parser');
  
 var app = express();
@@ -99,6 +102,16 @@ app.get('/:collection/:entity', function(req, res) { //I
    } else {
       res.send({error: 'bad url', url: req.url}).status(400);
    }
+});
+
+app.get('/:key/:key', function(req, res) {
+    var params = req.params;
+    var key = params.key;
+    if (key) {
+      qiniu(req, res, key);
+    } else {
+      res.status(400).send('error key');
+    }
 });
 
 app.post('/:collection', function(req, res) { //A
