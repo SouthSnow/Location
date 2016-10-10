@@ -247,10 +247,10 @@ function upload(response, request, filePath, fileId) {
     form.parse(request, function (error, fields, files) {
 
 
-      fs.renameSync(files.file.name, filePath, function (error) {
+      fs.renameSync(files.file, filePath, function (error) {
         if (error) {
           fs.unlink(filePath);
-          fs.rename(files.file.name, filePath);
+          fs.rename(files.file, filePath);
         }
       });
 
