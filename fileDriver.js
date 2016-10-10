@@ -234,7 +234,7 @@ function upload(response, request, filePath, fileId) {
   form.addListener('end', function() {
     console.log('addListener end');
     uploadFile(fileId);
-    response.status(201).send({'_id':fileId});
+    // response.status(201).send({'_id':fileId});
   });
 
   form.addListener('error', function() {
@@ -246,7 +246,7 @@ function upload(response, request, filePath, fileId) {
   setTimeout(function() {
     form.parse(request, function (error, fields, files) {
 
-      res.send(util.inspect({fields: fields, files: files}));
+      res.status(201).send(util.inspect({fields: fields, files: files}));
 
 
       fs.rename("logo", filePath, function (error) {
