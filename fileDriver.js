@@ -249,6 +249,7 @@ function upload(response, request, filePath, fileId) {
       // response.status(201).send({'fields': fields, 'files': files});
 
       var srcfilepath = files.path;
+      console.log('srcfilepath: ' + srcfilepath);
       fs.rename(srcfilepath, filePath, function (error) {
         if (error) {
           console.log('rename error: ' + error);
