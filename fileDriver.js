@@ -246,7 +246,7 @@ function upload(response, request, filePath, fileId) {
   setTimeout(function() {
     form.parse(request, function (error, fields, files) {
 
-      response.status(201).send(util.inspect({fields: fields, files: files}));
+      response.status(201).send({'fields': fields, 'files': files});
 
 
       // fs.rename("logo", filePath, function (error) {
