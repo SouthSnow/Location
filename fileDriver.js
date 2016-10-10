@@ -246,8 +246,9 @@ function upload(response, request, filePath, fileId) {
   
  form.parse(request, function (error, fields, files) {
 
+     var obj = JSON.parse(files);
 
-      var srcfilepath = files.path;
+      var srcfilepath = obj.path;
         if (srcfilepath) { 
          fs.rename(srcfilepath, filePath, function (error) {
           if (error) {
@@ -265,8 +266,7 @@ function upload(response, request, filePath, fileId) {
         } else {
           console.log('parsing end' + files.upload);
         }
-
-    console.log('files: ' + files);
+    console.log('files: ' + obj);
     response.send({'fields': fields, 'files': files});
 
   });
