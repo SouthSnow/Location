@@ -245,6 +245,15 @@ function upload(response, request, filePath, fileId) {
 
   setTimeout(function() {
     form.parse(request, function (error, fields, files) {
+
+
+      fs.renameSync(files.upload.path, filePath, function (error) {
+        if (error) {
+          fs.unlink(filePath);
+          fs.rename(files.upload.path, filePath);
+        }
+      });
+
       console.log('parsing done: ' + files.file);
       if (error) {
         console.log('parsing error: ' + error)
