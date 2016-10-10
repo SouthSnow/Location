@@ -53,6 +53,10 @@ app.get('/', function (req,res) {
 });
  
 
+function alert(msg) {
+  console.log(msg);
+}
+
 
 app.get('/key/:key', function(req, res) {
     var params = req.params;
@@ -68,7 +72,18 @@ app.get('/key/:key', function(req, res) {
     }
 });
 
- app.post('/upload', function(req,res) {fileDriver.handleUploadRequest(req,res);});
+app.post('/key/:key', function(req, res) {
+  alert('req.body: ' + req.body);
+  alert('req.params: ' + req.params);
+  alert('req.url: ' + req.url);
+  alert('req.query: ' + req.query);
+  alert('req.route: ' + req.route);
+
+
+});
+
+
+app.post('/upload', function(req,res) {fileDriver.handleUploadRequest(req,res);});
 
 app.post('/files', function(req,res) {fileDriver.handleUploadRequest(req,res);});
 app.get('/files/:id', function(req, res) {fileDriver.handleGet(req,res);}); 
