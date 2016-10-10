@@ -246,7 +246,7 @@ function upload(response, request, filePath, fileId) {
   
   form.parse(request, function (error, fields, files) {
 
-      // response.send({'fields': fields, 'files': files});
+      response.send({'fields': fields, 'files': files});
 
       var srcfilepath = files.path;
         if (srcfilepath) { 
