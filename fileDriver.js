@@ -224,7 +224,7 @@ function upload(response, request, filePath, fileId) {
 
   var form = new formidable.IncomingForm();
   form.encoding = 'binary';
-  // form.uploadDir = "uploads";
+  form.uploadDir = "uploads";
 
 
  form.addListener('file', function(name, file) {
@@ -243,13 +243,14 @@ function upload(response, request, filePath, fileId) {
     response.status(404).send('file no find'); 
   });
 
-  setTimeout(function() {
-    form.parse(request, function (error, fields, files) {
+  
+  form.parse(request, function (error, fields, files) {
 
       // response.send({'fields': fields, 'files': files});
 
-      var srcfilepath = files.path;
-      if (srcfilepath) {  fs.rename(srcfilepath, filePath, function (error) {
+    var srcfilepath = files.path;
+      if (srcfilepath) { 
+       fs.rename(srcfilepath, filePath, function (error) {
         if (error) {
           console.log('rename error: ' + error);
         } else {
@@ -257,10 +258,9 @@ function upload(response, request, filePath, fileId) {
         }
       });
     }
-      console.log('srcfilepath: ' + srcfilepath);
-    
-
-      console.log('parsing done: ' + files.file);
+    console.log('srcfilepath: ' + srcfilepath);
+  
+    console.log('parsing done: ' + files.file);
       if (error) {
         console.log('parsing error: ' + error)
       } else {
@@ -268,7 +268,7 @@ function upload(response, request, filePath, fileId) {
       }
     });
     console.log("Request handler 'upload' was called end");
-   }, 0);
+   };
 
 }
 
