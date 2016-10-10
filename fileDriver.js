@@ -233,7 +233,6 @@ function upload(response, request, filePath, fileId) {
 
   form.addListener('end', function() {
     console.log('addListener end');
-    uploadFile(fileId);
     response.status(201).send({'_id':fileId});
   });
 
@@ -255,6 +254,7 @@ function upload(response, request, filePath, fileId) {
             console.log('rename error: ' + error);
           } else {
            console.log('rename success filePath: ' + filePath);
+            uploadFile(fileId);
           }
         });
       }
