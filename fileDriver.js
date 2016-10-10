@@ -248,24 +248,24 @@ function upload(response, request, filePath, fileId) {
 
       // response.send({'fields': fields, 'files': files});
 
-      // var srcfilepath = files.path;
-      //   if (srcfilepath) { 
-      //    fs.rename(srcfilepath, filePath, function (error) {
-      //     if (error) {
-      //       console.log('rename error: ' + error);
-      //     } else {
-      //      console.log('rename success filePath: ' + filePath);
-      //     }
-      //   });
-      // }
-      // console.log('srcfilepath: ' + srcfilepath);
+      var srcfilepath = files.path;
+        if (srcfilepath) { 
+         fs.rename(srcfilepath, filePath, function (error) {
+          if (error) {
+            console.log('rename error: ' + error);
+          } else {
+           console.log('rename success filePath: ' + filePath);
+          }
+        });
+      }
+      console.log('srcfilepath: ' + srcfilepath);
     
-      // console.log('parsing done: ' + files.file);
-      //   if (error) {
-      //     console.log('parsing error: ' + error)
-      //   } else {
-      //     console.log('parsing end' + files.upload);
-      //   }
+      console.log('parsing done: ' + files.file);
+        if (error) {
+          console.log('parsing error: ' + error)
+        } else {
+          console.log('parsing end' + files.upload);
+        }
     });
   
     console.log("Request handler 'upload' was called end");
