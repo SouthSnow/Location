@@ -107,6 +107,11 @@ app.get('/:collection/:entity', function(req, res) { //I
 app.get('/:key/:key', function(req, res) {
     var params = req.params;
     var key = params.key;
+
+  console.log(req.url);
+  console.log(key);
+  console.log(req.params);
+
     if (key) {
       qiniu.download(req, res, key);
     } else {
