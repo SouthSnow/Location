@@ -120,13 +120,12 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
             // req.pipe(writable);
             // writable.on('finish', function () {
             //     console.log('something is piping finish');
-            //     uploadFile(id);
+            // uploadFile.upload(fileId);
             //     res.status(201).send({'_id':id});
             //  });
 
             //  writable.on('error', function () {
             //     console.log('something is piping error');
-            //     uploadFile(id);
             //     res.status(404).send("file not find");
             //  });
 
@@ -238,7 +237,6 @@ function upload(response, request, filePath, fileId) {
 
   form.addListener('error', function() {
     console.log('addListener error');
-    uploadFile(fileId);
     response.status(404).send('file no find'); 
   });
 
@@ -254,7 +252,7 @@ function upload(response, request, filePath, fileId) {
             console.log('rename error: ' + error);
           } else {
            console.log('rename success filePath: ' + filePath);
-            uploadFile(fileId);
+            uploadFile.upload(fileId);
           }
         });
       }

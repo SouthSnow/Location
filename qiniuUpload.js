@@ -40,7 +40,10 @@ function uploadFile(uptoken, key, localFile) {
 
 
 
-module.exports = function (key) {
+
+
+
+exports.upload = function (key) {
 	//调用uploadFile上传
 	//生成上传 Token
   var key_ = key + '.png';
@@ -53,6 +56,28 @@ module.exports = function (key) {
 
 	uploadFile(token, key_, filePath);
 };
+
+
+
+function download(key) {
+  // body...
+  //构建私有空间的链接
+  url = 'http://oeruk4rwa.bkt.clouddn.com/' + key;
+  var policy = new qiniu.rs.GetPolicy();
+  //生成下载链接url
+  var downloadUrl = policy.makeRequest(url);
+  //打印下载的url
+  console.log(downloadUrl);
+}
+
+exports.download = download;
+
+
+
+
+
+
+
 
 
 
