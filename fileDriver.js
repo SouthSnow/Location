@@ -248,7 +248,7 @@ function upload(response, request, filePath, fileId) {
 
      var obj = JSON.stringify(files);
 
-      var srcfilepath = obj.path;
+      var srcfilepath = files.files.path;
         if (srcfilepath) { 
          fs.rename(srcfilepath, filePath, function (error) {
           if (error) {
