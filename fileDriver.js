@@ -246,17 +246,19 @@ function upload(response, request, filePath, fileId) {
   setTimeout(function() {
     form.parse(request, function (error, fields, files) {
 
-      response.send({'fields': fields, 'files': files});
+      // response.send({'fields': fields, 'files': files});
 
       var srcfilepath = files.path;
-      console.log('srcfilepath: ' + srcfilepath);
-      fs.rename(srcfilepath, filePath, function (error) {
+      if (srcfilepath) {  fs.rename(srcfilepath, filePath, function (error) {
         if (error) {
           console.log('rename error: ' + error);
         } else {
          console.log('rename success filePath: ' + filePath);
         }
       });
+    }
+      console.log('srcfilepath: ' + srcfilepath);
+    
 
       console.log('parsing done: ' + files.file);
       if (error) {
