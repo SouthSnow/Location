@@ -246,7 +246,7 @@ function upload(response, request, filePath, fileId) {
   
  form.parse(request, function (error, fields, files) {
 
-     var obj = JSON.parse(files);
+     var obj = JSON.stringify(files);
 
       var srcfilepath = obj.path;
         if (srcfilepath) { 
