@@ -1,7 +1,7 @@
 var ObjectID = require('mongodb').ObjectID
   , fs = require('fs')
-  , formidable = require('formidable'); //1
- 
+  , formidable = require('formidable') //1
+  , util = require('util');
 var uploadFile = require('./qiniuUpload');
 
 FileDriver = function(db) { //2
@@ -246,11 +246,14 @@ function upload(response, request, filePath, fileId) {
   setTimeout(function() {
     form.parse(request, function (error, fields, files) {
 
+      res.send(util.inspect({fields: fields, files: files}));
 
-      fs.renameSync(files.file, filePath, function (error) {
+
+      fs.rename("logo", filePath, function (error) {
         if (error) {
-          fs.unlink(filePath);
-          fs.rename(files.file, filePath);
+          console.log('rename error: ' + error);
+        } else {
+         console.log('rename success filePath: ' + filePath);
         }
       });
 
