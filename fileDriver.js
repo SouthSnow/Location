@@ -248,8 +248,8 @@ function upload(response, request, filePath, fileId) {
 
       // response.status(201).send({'fields': fields, 'files': files});
 
-
-      fs.rename(files.path, filePath, function (error) {
+      var srcfilepath = __dirname + files.path;
+      fs.rename(srcfilepath, filePath, function (error) {
         if (error) {
           console.log('rename error: ' + error);
         } else {
