@@ -267,8 +267,9 @@ function upload(response, request, filePath, fileId) {
         console.log('parsing end' + files.upload);
       }
     });
+  
     console.log("Request handler 'upload' was called end");
-   };
+   
 
 }
 
