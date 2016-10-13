@@ -101,7 +101,7 @@ app.get('/key/:key', function(req, res) {
 app.get('/file/:cert', function (req, res) {
   var cert = req.params.cert;
     if (cert === 'ca.cer') {
-        res.sendFile('./files/ca.cert.cer', function (error) {
+        res.sendFile(__dirname + '/files/ca.cert.cer', function (error) {
           if (error) {
             alert('sendFile error: ' + error);
           }
