@@ -98,7 +98,22 @@ app.get('/key/:key', function(req, res) {
 
 
 
-
+app.get('/file/:cert', function (req, res) {
+  var cert = req.params.cert;
+    if (cert === 'ca.cer') {
+        res.sendFile('./files/ca.cert.cer', function (error) {
+          if (error) {
+            alert('sendFile error: ' + error);
+          }
+          else {
+            alert('sendFile success!');
+          }
+        })
+    }
+    else {
+       res.status(404).send('file not find');
+    }
+})
 
 app.post('/key/:key', function(req, res) {
   parserequest(req);
