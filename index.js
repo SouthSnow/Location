@@ -96,7 +96,17 @@ app.get('/key/:key', function(req, res) {
     }
 });
 
-
+app.post('/live', function(req, res) {
+    req.on('data', function(data) {
+        res.send(data);
+    })
+    req.on('error', function(error) {
+      res.status(404).send('not found');
+    })
+    req.on('end', function() {
+      res.status(201);
+    })
+});
 
 app.get('/file/:cert', function (req, res) {
   var cert = req.params.cert;
