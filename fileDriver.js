@@ -4,8 +4,12 @@ var ObjectID = require('mongodb').ObjectID
   , util = require('util');
 var uploadFile = require('./qiniuUpload');
 
-FileDriver = function(db) { //2
-  this.db = db;
+FileDriver = function(db, callback) { //2
+  var self = this;
+  // return new Promise(function (reject, resolve) {
+      self.db = db;
+  //     callback && callback();
+  // })
 };
 
 FileDriver.prototype.getCollection = function(callback) {
@@ -85,7 +89,8 @@ FileDriver.prototype.getNewFileId = function(newobj, callback) { //2
 	this.save(newobj, function(err,obj) {
 		if (err) { 
      console.log('About to route a request for save:' + err);
-      callback(err); } 
+      callback(err);
+     } 
 		else {
     console.log('About to route a request for save:' + obj._id);
 
@@ -243,8 +248,8 @@ function upload(response, request, filePath, fileId) {
   
  form.parse(request, function (error, fields, files) {
 
-     // var obj = JSON.stringify(files);
-
+     var obj = JSON.stringify(files);
+     console.log(obj);
       var srcfilepath = files.files.path;
         if (srcfilepath) { 
          fs.rename(srcfilepath, filePath, function (error) {
