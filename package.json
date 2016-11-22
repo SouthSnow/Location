@@ -6,6 +6,7 @@
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",
     "express": "^4.0.0",
+    "express-xml-bodyparser": "^0.3.0",
     "formidable": "^1.0.17",
     "jade": "^1.1.5",
     "mongodb": "^2.0.0",

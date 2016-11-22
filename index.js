@@ -10,6 +10,8 @@ var http = require('http'),
 
 var qiniu = require('./qiniuUpload');
 
+var xmlparser = require('express-xml-bodyparser');
+
 
 var bodyParser = require('body-parser');
  
@@ -44,7 +46,7 @@ app.get('/', function (req,res) {
     "<body>" + 
     '<form action="/upload" enctype="multipart/form-data" method="POST">' + 
     // "<textarea name='text' rows='20' cols='60'></textarea>" +
-    '<input type="file" name="upload" multiple="multiple">' + 
+    '<input type="file" name="fileupload" multiple="multiple">' + 
     "<input type='submit' value='submit file' />" +
     "</form>" + 
     "</body>" + 
@@ -136,6 +138,88 @@ app.post('/key/:key', function(req, res) {
   }
 });
 
+
+app.get('/702280.tran7',function (req, res) {
+  res.type('application/xml');
+  var data = '<?xml version="1.0" encoding="UTF-8"?>\
+  <EPOSPROTOCOL>\
+  <TRANDETAILS>\
+  <TRANDETAIL class="array">\
+  <CARDACTID>18938935872</CARDACTID>\
+  <CARDNO>6210300160068117</CARDNO>\
+  <CARDNAME>庞浩</CARDNAME>\
+  <ISSNO>11223</ISSNO>\
+  <TRNAMT>40000</TRNAMT>\
+  <TRNDATIM>20161210122455</TRNDATIM>\
+  <TRNSTS>1</TRNSTS>\
+  <TRNTYP>1</TRNTYP>\
+  </TRANDETAIL>\
+  <TRANDETAIL class="array">\
+  <CARDACTID>18938935875</CARDACTID>\
+  <CARDNO>6210300160068117</CARDNO>\
+  <CARDNAME>庞浩</CARDNAME>\
+  <ISSNO>11223</ISSNO>\
+  <TRNAMT>40000</TRNAMT>\
+  <TRNDATIM>20161116122455</TRNDATIM>\
+  <TRNSTS>1</TRNSTS>\
+  <TRNTYP>1</TRNTYP>\
+  </TRANDETAIL>\
+  <TRANDETAIL class="array">\
+  <CARDACTID>18938935872</CARDACTID>\
+  <CARDNO>6210300160068117</CARDNO>\
+  <CARDNAME>庞浩</CARDNAME>\
+  <ISSNO>11223</ISSNO>\
+  <TRNAMT>40000</TRNAMT>\
+  <TRNDATIM>20161010122455</TRNDATIM>\
+  <TRNSTS>1</TRNSTS>\
+  <TRNTYP>1</TRNTYP>\
+  </TRANDETAIL>\
+  <TRANDETAIL class="array">\
+  <CARDACTID>18938935875</CARDACTID>\
+  <CARDNO>6210300160068117</CARDNO>\
+  <CARDNAME>庞浩</CARDNAME>\
+  <ISSNO>11223</ISSNO>\
+  <TRNAMT>100000</TRNAMT>\
+  <TRNDATIM>20161010122455</TRNDATIM>\
+  <TRNSTS>1</TRNSTS>\
+  <TRNTYP>0</TRNTYP>\
+  </TRANDETAIL>\
+  <TRANDETAIL class="array">\
+  <CARDACTID>18938935876</CARDACTID>\
+  <CARDNO>6210300160068117</CARDNO>\
+  <CARDNAME>庞浩</CARDNAME>\
+  <ISSNO>11223</ISSNO>\
+  <TRNAMT>40000</TRNAMT>\
+  <TRNDATIM>20161011122455</TRNDATIM>\
+  <TRNSTS>0</TRNSTS>\
+  <TRNTYP>1</TRNTYP>\
+  </TRANDETAIL>\
+  <TRANDETAIL class="array">\
+  <CARDACTID>18938935877</CARDACTID>\
+  <CARDNO>6210300160068117</CARDNO>\
+  <CARDNAME>庞浩</CARDNAME>\
+  <ISSNO>11223</ISSNO>\
+  <TRNAMT>40000</TRNAMT>\
+  <TRNDATIM>20160910122451</TRNDATIM>\
+  <TRNSTS>0</TRNSTS>\
+  <TRNTYP>0</TRNTYP>\
+  </TRANDETAIL>\
+  <TRANDETAIL class="array">\
+  <CARDACTID>1893893588</CARDACTID>\
+  <CARDNO>6210300160068117</CARDNO>\
+  <CARDNAME>庞浩</CARDNAME>\
+  <ISSNO>11223</ISSNO>\
+  <TRNAMT>40000</TRNAMT>\
+  <TRNDATIM>20161010122455</TRNDATIM>\
+  <TRNSTS>1</TRNSTS>\
+  <TRNTYP>1</TRNTYP>\
+  </TRANDETAIL>\
+  </TRANDETAILS>\
+  <RSPCOD>000000</RSPCOD><RSPMSG>交易成功</RSPMSG>\
+  </EPOSPROTOCOL>'
+  res.send(data)
+  res.status(200);
+})
 
 app.post('/upload', function(req,res) {fileDriver.handleUploadRequest(req,res);});
 
