@@ -142,7 +142,7 @@ function demo() {
   var banks = ['农业银行','北京银行','工商银行','中国银行','招商银行','建设银行','浦发银行'];
   var months = ['01','02','03','04','05','06','07','08','09','10','11','12'];
   var trans = "";
-  for (var i = 0; i < 1; i++) {
+  for (var i = 0; i < 40; i++) {
   var tran =  '<TRANDETAIL class="array"><CARDACTID>18938935872</CARDACTID><CARDNO>621030016006811' + i%10 + '</CARDNO><CARDNAME>庞浩</CARDNAME><ISSNO>11223</ISSNO><TRNAMT>40000'+ i + '</TRNAMT><TRNDATIM>2016' + months[i%12] + '10122455</TRNDATIM><TRNSTS>' + "0" + '</TRNSTS><TRNTYP>' + (i % 2 === 1 ? "1" : "0" ) + '</TRNTYP><BANKNAME>'+ banks[i%banks.length] +'</BANKNAME></TRANDETAIL>'
   trans += tran;
 }
