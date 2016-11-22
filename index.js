@@ -142,7 +142,7 @@ function demo() {
   var banks = ['农业银行','北京银行','工商银行','中国银行','招商银行','建设银行','浦发银行'];
   var months = ['01','02','03','04','05','06','07','08','09','10','11','12'];
   var trans = "";
-  for (var i = 0; i < 40; i++) {
+  for (var i = 0; i < 4000; i++) {
   var tran =  '<TRANDETAIL class="array">\
   <CARDACTID>18938935872</CARDACTID>\
   <CARDNO>621030016006811' + i%10 + '</CARDNO>\
@@ -160,7 +160,6 @@ function demo() {
 }
 
 app.get('/702280.tran7',function (req, res) {
-  console.log(demo())
   res.type('application/xml');
   var data = '<?xml version="1.0" encoding="UTF-8"?>\
   <EPOSPROTOCOL>\
