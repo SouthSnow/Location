@@ -12,6 +12,8 @@ var qiniu = require('./qiniuUpload');
 
 var xmlparser = require('express-xml-bodyparser');
 
+var chemistry = require('./chemistry');
+var share = require('./share');
 
 var bodyParser = require('body-parser');
  
@@ -35,7 +37,8 @@ MongoClient.connect(dbUrl, function (err, db) {
 });
 
 app.use(express.static(path.join(__dirname, 'public')));
- 
+app.use('/chemistry', chemistry.chemistry);
+app.use('/share', share.share)
 app.get('/', function (req,res) {
 
   console.log("Request handler 'start' was called")
@@ -46,6 +49,7 @@ app.get('/', function (req,res) {
     "<body>" + 
     '<form action="/upload" enctype="multipart/form-data" method="POST">' + 
     // "<textarea name='text' rows='20' cols='60'></textarea>" +
+    '<input type="text" name="txt" id="txt"><br>'+
     '<input type="file" name="fileupload" multiple="multiple">' + 
     "<input type='submit' value='submit file' />" +
     "</form>" + 
@@ -65,10 +69,12 @@ function stringify(obj) {
   return JSON.stringify(obj);
 }
 
-function parserequest(req) {
+function parserequest(req, res) {
+  // alert('req: ' + stringify(req.data));
+  // res.send(req);
   alert('req.headers: ' + stringify(req.headers));
-  alert('req.body: ' + stringify(req.body));
-  alert('req.params: ' + stringify(req.params));
+  alert('req.body: ' + stringify(req.body.txt));
+  alert('req.params: ' + stringify(req.params["txt"]));
   alert('req.url: ' + req.url);
   alert('req.originalUrl: ' + req.originalUrl);
   alert('req.query: ' + stringify(req.query));
@@ -97,6 +103,8 @@ app.get('/key/:key', function(req, res) {
       res.status(400).send('error key');
     }
 });
+
+
 
 app.post('/live', function(req, res) {
     req.on('data', function(data) {
@@ -171,7 +179,10 @@ app.get('/702280.tran7',function (req, res) {
   res.status(200);
 })
 
-app.post('/upload', function(req,res) {fileDriver.handleUploadRequest(req,res);});
+app.post('/upload', function(req,res) {
+  parserequest(req,res);
+  fileDriver.handleUploadRequest(req,res);
+});
 
 app.post('/files', function(req,res) {fileDriver.handleUploadRequest(req,res);});
 app.get('/files/:id', function(req, res) {fileDriver.handleGet(req,res);}); 
