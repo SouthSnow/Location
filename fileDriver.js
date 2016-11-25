@@ -118,21 +118,21 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
              console.log('About to route a request for filePath :' + filePath );
              // res.status(201).send({'_id':id});
 
-             upload(res, req, filePath, id);
+             // upload(res, req, filePath, id);
             
 
-            // var writable = fs.createWriteStream(filePath); //7
-            // req.pipe(writable);
-            // writable.on('finish', function () {
-            //     console.log('something is piping finish');
-            // uploadFile.upload(fileId);
-            //     res.status(201).send({'_id':id});
-            //  });
+            var writable = fs.createWriteStream(filePath); //7
+            req.pipe(writable);
+            writable.on('finish', function () {
+                console.log('something is piping finish');
+            uploadFile.upload(fileId);
+                res.status(201).send({'_id':id});
+             });
 
-            //  writable.on('error', function () {
-            //     console.log('something is piping error');
-            //     res.status(404).send("file not find");
-            //  });
+             writable.on('error', function () {
+                console.log('something is piping error');
+                res.status(404).send("file not find");
+             });
 
              // writable.on('pipe', function (src) {
              //    console.log('something is piping into the writer');
