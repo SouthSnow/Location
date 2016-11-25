@@ -49,7 +49,7 @@ FileDriver.prototype.handleGet = function(req, res) { //1
                          var filePath = __dirname +'/uploads/'+ "upload_" + filename; //4
                           fs.exists(filePath, function (exist) {
                              if (!exist) {
-                                filePath =  __dirname +'/uploads/' + 'default.png'
+                                filePath =  __dirname +'/uploads/' + 'upload_2f6371ab2f525bbdb1d38ceb20c97080.png'
                                 console.log('About to route a request for sendFile:' + filePath);
                                 res.sendFile(filePath); //5
 
