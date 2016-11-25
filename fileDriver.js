@@ -125,7 +125,7 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
             req.pipe(writable);
             writable.on('finish', function () {
                 console.log('something is piping finish');
-            uploadFile.upload(fileId);
+               uploadFile.upload(id);
                 res.status(201).send({'_id':id});
              });
 
