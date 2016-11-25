@@ -49,7 +49,7 @@ FileDriver.prototype.handleGet = function(req, res) { //1
                          var filePath = __dirname +'/uploads/'+ "upload_" + filename; //4
                           fs.exists(filePath, function (exist) {
                              if (!exist) {
-                                filePath =  __dirname +'/uploads/' + 'upload_2f6371ab2f525bbdb1d38ceb20c97080.png'
+                                filePath =  __dirname +'/uploads/' + 'default.png'
                                 console.log('About to route a request for sendFile:' + filePath);
                                 res.sendFile(filePath); //5
 
@@ -121,18 +121,18 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
              upload(res, req, filePath, id);
             
 
-            // var writable = fs.createWriteStream(filePath); //7
-            // req.pipe(writable);
-            // writable.on('finish', function () {
-            //     console.log('something is piping finish');
-            //     uploadFile.upload(id);
-            //     res.status(201).send({'_id':id});
-            //  });
+            var writable = fs.createWriteStream(filePath); //7
+            req.pipe(writable);
+            writable.on('finish', function () {
+                console.log('something is piping finish');
+                uploadFile.upload(id);
+                res.status(201).send({'_id':id});
+             });
 
-            //  writable.on('error', function () {
-            //     console.log('something is piping error');
-            //     res.status(404).send("file not find");
-            //  });
+             writable.on('error', function () {
+                console.log('something is piping error');
+                res.status(404).send("file not find");
+             });
 
              // writable.on('pipe', function (src) {
              //    console.log('something is piping into the writer');
