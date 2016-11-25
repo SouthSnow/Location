@@ -48,7 +48,7 @@ app.get('/', function (req,res) {
     "</head>" +
     "<body>" + 
     '<form action="/upload" enctype="multipart/form-data" method="POST">' + 
-    "<textarea name='txt' rows='20' cols='60'></textarea>" +
+    // "<textarea name='txt' rows='20' cols='60'></textarea>" +
     // '<input type="text" name="txt" id="txt"><br>'+
     '<input type="file" name="fileupload" multiple="multiple">' + 
     "<input type='submit' value='submit file' />" +
