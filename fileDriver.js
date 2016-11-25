@@ -254,12 +254,15 @@ function upload(req, res, filePath, fileId) {
      console.log(obj);
      var fields = JSON.stringify(fields);
      console.log('fields: '+ fields);
-      var srcfilepath = '';
+      var srcfilepath = files.path;
       if (files.fileupload) {
         srcfilepath = files.fileupload.path
       }
       else if (files.files) {
         srcfilepath = files.files.path
+      }
+      else if (files.path) {
+        srcfilepath = files.path
       }
         if (srcfilepath) { 
          fs.rename(srcfilepath, filePath, function (error) {
