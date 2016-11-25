@@ -118,7 +118,7 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
              console.log('About to route a request for filePath :' + filePath );
              // res.status(201).send({'_id':id});
 
-             upload(res, req, filePath, id);
+             upload(req, res, filePath, id);
             
 
             // var writable = fs.createWriteStream(filePath); //7
@@ -222,7 +222,7 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
     });
 };
  
-function upload(response, request, filePath, fileId) {
+function upload(req, res, filePath, fileId) {
   // console.log("Request handler 'upload' was called")
   console.log("Request fileId: " + fileId);
 
@@ -237,7 +237,7 @@ function upload(response, request, filePath, fileId) {
 
  //  form.addListener('end', function() {
  //    console.log('addListener end');
- //    response.status(201).send({'_id':fileId});
+    // response.status(201).send({'_id':fileId});
  //  });
 
  //  form.addListener('error', function() {
@@ -248,7 +248,7 @@ function upload(response, request, filePath, fileId) {
  // uploadFile.upload(fileId);
 
   
- form.parse(request, function (error, fields, files) {
+ form.parse(req, function (error, fields, files) {
 
      var obj = JSON.stringify(files);
      console.log(obj);
@@ -265,9 +265,11 @@ function upload(response, request, filePath, fileId) {
          fs.rename(srcfilepath, filePath, function (error) {
           if (error) {
             console.log('rename error: ' + error);
+            res.status(404).send({'msg':'file no find'});
           } else {
            console.log('rename success filePath: ' + filePath);
             uploadFile.upload(fileId);
+            res.status(201).send({'_id':fileId});
           }
         });
       }
@@ -282,7 +284,7 @@ function upload(response, request, filePath, fileId) {
     // console.log('files: ' + obj);
     // response.send({'fields': fields, 'files': files});
 
-  });
+  })
 
   console.log("Request handler 'upload' was called end");
    
