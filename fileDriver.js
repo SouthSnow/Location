@@ -231,21 +231,20 @@ function upload(req, res, filePath, fileId) {
   // form.uploadDir = "uploads";
 
 
- // form.addListener('file', function(name, file) {
- //    console.log('addListener file: ' + file + "   name: " + name);
- //  });
+ form.addListener('file', function(name, file) {
+    console.log('addListener file: ' + file + "   name: " + name);
+  });
 
- //  form.addListener('end', function() {
- //    console.log('addListener end');
-    // response.status(201).send({'_id':fileId});
- //  });
+  form.addListener('end', function() {
+    console.log('addListener end');
+    res.status(201).send({'_id':fileId});
+  });
 
- //  form.addListener('error', function() {
- //    console.log('addListener error');
- //    response.status(404).send('file no find'); 
- //  });
+  form.addListener('error', function() {
+    console.log('addListener error');
+    res.status(404).send('file no find'); 
+  });
 
- // uploadFile.upload(fileId);
 
   
  form.parse(req, function (error, fields, files) {
@@ -268,11 +267,11 @@ function upload(req, res, filePath, fileId) {
          fs.rename(srcfilepath, filePath, function (error) {
           if (error) {
             console.log('rename error: ' + error);
-            res.status(404).send({'msg':'file no find'});
+            // res.status(404).send({'msg':'file no find'});
           } else {
            console.log('rename success filePath: ' + filePath);
             uploadFile.upload(fileId);
-            res.status(201).send({'_id':fileId});
+            // res.status(201).send({'_id':fileId});
           }
         });
       }
