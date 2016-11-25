@@ -227,23 +227,23 @@ function upload(response, request, filePath, fileId) {
   console.log("Request fileId: " + fileId);
 
   var form = new formidable.IncomingForm();
-  form.encoding = 'binary';
-  form.uploadDir = "uploads";
+  // form.encoding = 'binary';
+  // form.uploadDir = "uploads";
 
 
- form.addListener('file', function(name, file) {
-    console.log('addListener file: ' + file + "   name: " + name);
-  });
+ // form.addListener('file', function(name, file) {
+ //    console.log('addListener file: ' + file + "   name: " + name);
+ //  });
 
-  form.addListener('end', function() {
-    console.log('addListener end');
-    response.status(201).send({'_id':fileId});
-  });
+ //  form.addListener('end', function() {
+ //    console.log('addListener end');
+ //    response.status(201).send({'_id':fileId});
+ //  });
 
-  form.addListener('error', function() {
-    console.log('addListener error');
-    response.status(404).send('file no find'); 
-  });
+ //  form.addListener('error', function() {
+ //    console.log('addListener error');
+ //    response.status(404).send('file no find'); 
+ //  });
 
  // uploadFile.upload(fileId);
 
