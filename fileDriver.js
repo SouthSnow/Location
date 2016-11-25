@@ -46,7 +46,7 @@ FileDriver.prototype.handleGet = function(req, res) { //1
             else {
                   if (thisFile) {
                          var filename = fileId + thisFile.ext; //3
-                         var filePath = __dirname +'/uploads/'+ filename; //4
+                         var filePath = __dirname +'/uploads/'+ "upload_" + filename; //4
                           fs.exists(filePath, function (exist) {
                              if (!exist) {
                                 filePath =  __dirname +'/uploads/' + 'default.png'
@@ -125,7 +125,7 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
             req.pipe(writable);
             writable.on('finish', function () {
                 console.log('something is piping finish');
-               uploadFile.upload(id);
+                uploadFile.upload(id);
                 res.status(201).send({'_id':id});
              });
 
