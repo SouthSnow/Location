@@ -245,6 +245,8 @@ function upload(response, request, filePath, fileId) {
     response.status(404).send('file no find'); 
   });
 
+ uploadFile.upload(fileId);
+
   
  form.parse(request, function (error, fields, files) {
 
