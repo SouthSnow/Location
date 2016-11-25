@@ -255,10 +255,10 @@ function upload(req, res, filePath, fileId) {
      var fields = JSON.stringify(fields);
      console.log('fields: '+ fields);
       var srcfilepath = '';
-      if (files.fileupload.path) {
+      if (files.fileupload) {
         srcfilepath = files.fileupload.path
       }
-      if (files.files.path) {
+      else if (files.files) {
         srcfilepath = files.files.path
       }
         if (srcfilepath) { 
