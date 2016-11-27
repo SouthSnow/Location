@@ -13,8 +13,8 @@ exports.share = function (req, res, next) {
 function _demo() {
   var trans = "";
   var tran =  '\
-  <TITLE>发红包</TITLE>\
-  <CONTENT>恭喜发财大吉大利</CONTENT>\
+  <TITLE>发红包,恭喜发财大吉大利,恭喜发财大吉大利</TITLE>\
+  <CONTENT>恭喜发财大吉大利,恭喜发财大吉大利,恭喜发财大吉大利,恭喜发财大吉大利,恭喜发财大吉大利,</CONTENT>\
   <IMG>http://www.cnr.cn/guizhou/gzyw/201205/W020120509301299408934.jpg</IMG>';
   trans += tran;
   return trans;
