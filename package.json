@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "apn": "^2.1.2",
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",
     "express": "^4.0.0",
