@@ -10,7 +10,9 @@
     "express-xml-bodyparser": "^0.3.0",
     "formidable": "^1.0.17",
     "jade": "^1.1.5",
+    "later": "^1.2.0",
     "mongodb": "^2.2.11",
+    "mongoose": "^4.7.0",
     "qiniu": "^6.1.11"
   }
 }

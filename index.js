@@ -38,6 +38,8 @@ MongoClient.connect(dbUrl, function (err, db) {
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/chemistry', chemistry.chemistry);
+app.use('/chemistryInput', chemistry.chemistryInput)
+
 app.use('/share', share.share)
 app.get('/', function (req,res) {
 

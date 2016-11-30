@@ -1,27 +1,48 @@
+doctype html
+html(lang='en')
+  head
+    h1=title2
+    p Welcome to #{title2}
+    style.
+        label {
+         margin: 20px auto;
+         border:1px #eaeaea solid;
+         width:80%;
+         height:200px; }
+        textarea {
+         margin: 20px auto;
+         border:1px #eaeaea solid;
+         width:80%;
+         height:200px;}
+        #input {
+         margin-bottom: auto;
+         margin-top: auto;
+         position: relative;
+         top: 50%; 
+         left: 50%;
+         vertical-align:text-top;}
+body
+  form(action="/chemistryInput", enctype="multipart/form-data", method="POST") 
+    div
+      label 标题
+      input(type='text',name="title",placeholder="请输入标题") 
+    div
+      label(style="color:blue; text-align:bottom") 请输入内容
+    div
+      textarea(type='text',name="content", placeholder="请输入内容", cols=50, rows=20) 
+    div
+      label 请输入解析内容
+    div
+      textarea(type='text',name="analysis", placeholder="请输入解析内容", cols=50, rows=20) 
+    div
+      input(type='file',name="fileupload",multiple="multiple", value="图片只能为png格式")
+    div
+      input#input(type='submit', value='提交') 
 
 
-block content
-  h1= title2
-  p Welcome to #{title2} 
- 
-form(action="/upload", enctype="multipart/form-data", method="POST")
-  input(type='file',name="fileupload",multiple="multiple", value="图片只能为png格式") 
-  input(type='text',name="text",multiple="multiple") 
-  input(type='radio',name="radio",multiple="multiple") 
-  div
-     label width
-     input(type='text',name="width",placeholder="请输入宽度") 
-  div
-     label heigth
-     input(type='text',name="height", placeholder="请输入高度") 
-  div
-     label color
-     input(type='text',name="color",placeholder="请输入颜色") 
-  input(type='button',name="button",multiple="multiple") 
-  input(type='checkbox',name="checkbox",multiple="multiple") 
-
-  input(type='submit', value='submit file')
 
 
-div.container.flow#container Container
-a(class="btn", href='javascript:;', titile='submit') Button
+
+
+
+
