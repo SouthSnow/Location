@@ -1,4 +1,4 @@
-var mongoose = require('./mongoose'),
+var mongoose = require('../common/mongoose'),
 	formidable = require('formidable');
 	fs = require('fs');
 var Schema = new mongoose.Schema({

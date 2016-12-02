@@ -2,7 +2,7 @@ var ObjectID = require('mongodb').ObjectID
   , fs = require('fs')
   , formidable = require('formidable') //1
   , util = require('util');
-var uploadFile = require('./qiniuUpload');
+var uploadFile = require('../common/qiniuUpload');
 
 FileDriver = function(db, callback) { //2
   var self = this;

@@ -5,13 +5,13 @@ var http = require('http'),
     querystring = require('querystring'),
     MongoClient = require('mongodb').MongoClient,
     Server = require('mongodb').Server,
-    CollectionDriver = require('./collectionDriver').CollectionDriver,
-    FileDriver = require('./fileDriver').FileDriver, //<---
-    notification = require('./notification'),
-    qiniu = require('./qiniuUpload'),
+    CollectionDriver = require('./location/collectionDriver').CollectionDriver,
+    FileDriver = require('./location/fileDriver').FileDriver, //<---
+    notification = require('./chemistry/notification'),
+    qiniu = require('./common/qiniuUpload'),
     xmlparser = require('express-xml-bodyparser'),
-    chemistry = require('./chemistry'),
-    share = require('./share'),
+    chemistry = require('./chemistry/chemistry'),
+    share = require('./common/share'),
     bodyParser = require('body-parser'),
     formidable = require('formidable');
  
@@ -326,9 +326,7 @@ http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
 
-app.on('error', function (error) {
-   console.log('error: ', error);
-})
-
+// app.listen(app.get('port'))
+// console.log('Express server listening on port ' + app.get('port'));
 
 
