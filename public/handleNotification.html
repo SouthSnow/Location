@@ -2,19 +2,31 @@
 <html>
 <head>
 	<title>通知推送</title>
-	<p>通知推送</p>
+	<p id="title">通知推送</p>
+	<style type="text/css">
+		body {background-color: #fff}
+		form {
+			margin: 1em 10%;
+			background-color: #fff;
+			position: relative;
+		}
+		#submit {border: 2px; position: relative; left: 50%; top: 50%; padding: 10px; margin: 10px}
+		#title {position: relative; left: 50%; top: 50%;}
+		label {padding: 5px; float: left;}
+		div {position: relative; width: 100%;}
+	</style>
 </head>
 <body>
 	<form action="/pushAll" method="post" enctype="multipart/form-data">
 		<div>
 			<label>请输入电话号码</label>
-			<textarea name="phone" cols="20" rows="10" placeholder="请输入电话号码"></textarea>
+			<textarea name="phone" cols="100" rows="5" placeholder="请输入电话号码, 多个手机号用逗号分隔"></textarea>
 		</div>
 		<div>
 			<label>请输入推送内容</label>
-			<textarea name="message" cols="50" rows="20" placeholder="请输入推送内容"></textarea>
+			<textarea name="message" cols="100" rows="10" placeholder="请输入推送内容"></textarea>
 		</div>
-		<input type="submit" value="提交">
+		<input id="submit" type="submit" value="提交" action='return false'>
 	</form>
 </body>
 </html>

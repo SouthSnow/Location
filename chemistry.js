@@ -8,18 +8,32 @@ var Schema = new mongoose.Schema({
 	image: Buffer
 });
 
-var Chemistry = mongoose.model('Chemistry',Schema);
+var SchemaTopic = new mongoose.Schema({
+	content: String,
+	A: String,
+	B: String,
+	C: String,
+	D: String,
+	analysis: String
+});
 
-function _parseChemistry(fields) {
+var Chemistry = mongoose.model('Chemistry',Schema);
+var ChemistryTopic = mongoose.model('ChemistryTopic',SchemaTopic);
+
+
+function _parseChemistry(fields, fn) {
 	if (!(fields instanceof Object)) {return}
 	var chemistry = new Chemistry();
 	chemistry.title = fields.title;
 	chemistry.content = fields.content;
 	chemistry.analysis = fields.analysis;
-	chemistry.save(function (err) {
-		if (err) {console.log('err:', err)}
+	chemistry.save(function (err, chem) {
+		if (err) {
+			console.log('err:', err)
+		}
 		else
 			console.log('save success');
+		fn&&fn(chem);
 		Chemistry.find({},function (err, token) {
 		if (err) {console.log('err: ', err)}
 		else 
@@ -58,28 +72,27 @@ function _upload(req, res, next) {
 	     console.log(obj);
 	     var fields_ = JSON.stringify(fields);
 	     if (fields) {
-	     	_parseChemistry(fields);
+	     	_parseChemistry(fields, function (chem) {
+	     		var srcfilepath = files.path || '';
+			    if (files.fileupload) {
+			        srcfilepath = files.fileupload.path
+			    }
+			    else if (files.files) {
+			        srcfilepath = files.files.path
+			    }
+		        if (srcfilepath) { 
+			        var filePath = __dirname + '/uploads/' + chem._id + '.png';
+			         fs.rename(srcfilepath, filePath, function (error) {
+			          if (error) {
+			            console.log('rename error: ' + error);
+			          } else {
+			           console.log('rename success filePath: ' + filePath);
+			          }
+			        });
+		      	}
+	     	});
 	     }
-	      var srcfilepath = files.path || '';
-	      if (files.fileupload) {
-	        srcfilepath = files.fileupload.path
-	      }
-	      else if (files.files) {
-	        srcfilepath = files.files.path
-	      }
-	    
-        if (srcfilepath) { 
-        var filePath = __dirname + '/uploads/' + 'xxx.png';
-         fs.rename(srcfilepath, filePath, function (error) {
-          if (error) {
-            console.log('rename error: ' + error);
-            // res.status(404).send({'msg':'file no find'});
-          } else {
-           console.log('rename success filePath: ' + filePath);
-            // res.status(201).send({'_id':fileId});
-          }
-        });
-      } 
+	     
         if (error) {
           console.log('parsing error: ' + error)
         } else {
@@ -92,7 +105,37 @@ function _upload(req, res, next) {
 exports.chemistryInput = chemistryInput;
 exports.chemistry = chemistry;
 
-
+var parseTopic = exports.parseTopic = function (req, res, next) {
+	var form =  new formidable.IncomingForm();
+	form.addListener('error', function (error) {
+		res.status(404).send(error);
+	})
+	form.addListener('end', function () {
+		res.status(201).send({msg: 'top parse success'});
+	})
+	form.parse(req, function (error, fields, files) {
+		console.log('fields: ', JSON.stringify(fields));
+		if (fields) {
+			var topic = fields;
+			var che_topic = new ChemistryTopic({
+				content: topic.content,
+				A: topic.A,
+				B: topic.B,
+				C: topic.C,
+				D: topic.D,
+				analysis: topic.analysis
+			});
+			che_topic.save(function (err) {
+				if (err) {
+					console.log('save err: ', err);
+				}
+				else {
+					console.log('save topic success');
+				}
+			})
+		}
+	})	
+}
 
 
 

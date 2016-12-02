@@ -107,6 +107,25 @@ var _saveToken = exports.saveToken = function (token) {
 }
 
 
+var _sendMessageForPhone = exports.sendMessageForPhone = function (phone, msg) {
+	console.log('phone', phone);
+	var phones = [];
+	phone.forEach( function(phone) {
+		phones.push({phone: phone});
+	});
+	Token.find(phones,'token',function (err, token) {
+		console.log('token: ', token);
+		if (err) {console.log('err: ', err)}
+		else if (token) {
+			var tokens = []
+			token.forEach( function(token) {
+				tokens.push(token.token);
+			});
+			_pushNotification(tokens, msg);
+		}
+	})
+}
+
 
 
 

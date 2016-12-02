@@ -43,7 +43,12 @@ app.post('/pushAll', function (req, res) {
   form.parse(req, function (err, fields, files) {
     console.log(fields.message)
     if (fields.message && !err) {
-            notification.pushNotificationInterval(fields.message);
+        if (fields.phone) {
+          var phones = fields.phone.split(',')
+          notification.sendMessageForPhone(phones, fields.message);
+          return
+        }
+          notification.pushNotificationInterval(fields.message);
         // notification.pushNotification('b27e9a1c284e9d71c9ebf3e01c35eca48ca4e116e057e38b7d2d9eb3700d6e9a', fields.message || '今天心情不好')
     }
   })
@@ -71,6 +76,16 @@ app.get('/push',function (req, res) {
   res.sendFile(file);
   res.status(201);
 })
+
+// 选择题
+app.get('/topic', function (req, res) {
+  var file = __dirname + '/public/' + 'topic.html';
+  res.sendFile(file);
+  res.status(201);
+})
+
+app.use('/topic', chemistry.parseTopic);
+
 
 
 app.use('/share', share.share)

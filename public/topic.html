@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>选择题</title>
+	<h1>选择题</h1>
+	<style type="text/css">
+		label {float: left; margin-right: 10px; width: 50px; text-align: right;}
+		form {
+			margin: 10px 10%;
+			background-color: #fff;
+			position: relative;
+		}
+		h1 {position: relative; left: 50%; top: 50%}
+		input {position: relative;left: 50%; top: 50%; margin: 10px; padding: 10px}
+	</style>
+</head>
+<body>
+	<form action="/topic" method="post" enctype="multipart/form-data">
+		<div>
+			<label>题目</label>
+			<textarea name="content" cols="100" rows="10" placeholder="请输入内容"></textarea>
+		</div>
+		<div>
+			<label>A选项</label>
+			<textarea name="A" cols="100" rows="1" placeholder="请输入A选项"></textarea>
+		</div>
+		<div>
+			<label>B选项</label>
+			<textarea name="B" cols="100" rows="1" placeholder="请输入B选项"></textarea>
+		</div>
+		<div>
+			<label>C选项</label>
+			<textarea name="C" cols="100" rows="1" placeholder="请输入C选项"></textarea>
+		</div>
+		<div>
+			<label>D选项</label>
+			<textarea name="D" cols="100" rows="1" placeholder="请输入D选项"></textarea>
+		</div>
+		<div>
+			<label>解析</label>
+			<textarea name="analysis" cols="100" rows="10" placeholder="请输入解析"></textarea>
+		</div>
+		<div>
+			<input type="submit" name="">
+		</div>
+	</form>
+	
+</body>
+</html>
