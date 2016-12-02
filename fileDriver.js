@@ -78,7 +78,6 @@ FileDriver.prototype.save = function(obj, callback) { //1
         console.log('About to route a request for getCollection:');
         the_collection.insert(obj, function() {
          console.log('About to route a request for insert:' + obj);
-
           callback(null, obj);
         });
       }
@@ -88,13 +87,12 @@ FileDriver.prototype.save = function(obj, callback) { //1
 FileDriver.prototype.getNewFileId = function(newobj, callback) { //2
 	this.save(newobj, function(err,obj) {
 		if (err) { 
-     console.log('About to route a request for save:' + err);
+      console.log('About to route a request for save:' + err);
       callback(err);
      } 
 		else {
-    console.log('About to route a request for save:' + obj._id);
-
-     callback(null,obj._id);
+      console.log('About to route a request for save:' + obj._id);
+      callback(null,obj._id);
       } //3
 	});
 };
@@ -105,11 +103,9 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
     if (ext) {ext = '.' + ext; } else {ext = ''};
     if (ext.length > 4) {ext = '.png'};
     console.log('handleUploadRequest ctype: ' + ctype);
-
     this.getNewFileId({'content-type':ctype, 'ext':ext}, function(err,id) { //4
         if (err) { 
           console.log('About to route a request for getNewFileId err ' + err);
-
           res.status(404).send(error);
          } 
         else { 	         
@@ -117,10 +113,7 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
              filePath = __dirname + '/uploads/' + filename; //6
              console.log('About to route a request for filePath :' + filePath );
              // res.status(201).send({'_id':id});
-
              upload(req, res, filePath, id);
-            
-
             // var writable = fs.createWriteStream(filePath); //7
             // req.pipe(writable);
             // writable.on('finish', function () {
@@ -225,16 +218,12 @@ FileDriver.prototype.handleUploadRequest = function(req, res) { //1
 function upload(req, res, filePath, fileId) {
   // console.log("Request handler 'upload' was called")
   console.log("Request fileId: " + fileId);
-
   var form = new formidable.IncomingForm();
   // form.encoding = 'binary';
   // form.uploadDir = "uploads";
-
-
  form.addListener('file', function(name, file) {
     console.log('addListener file: ' + file + "   name: " + name);
   });
-
   form.addListener('end', function() {
     console.log('addListener end');
     res.status(201).send({'_id':fileId});
@@ -243,12 +232,8 @@ function upload(req, res, filePath, fileId) {
   form.addListener('error', function() {
     console.log('addListener error');
     res.status(404).send('file no find'); 
-  });
-
-
-  
+  });  
  form.parse(req, function (error, fields, files) {
-
      var obj = JSON.stringify(files);
      console.log(obj);
      var fields = JSON.stringify(fields);
@@ -275,9 +260,6 @@ function upload(req, res, filePath, fileId) {
           }
         });
       }
-      console.log('srcfilepath: ' + srcfilepath);
-    
-      console.log('parsing done: ' + files.file);
         if (error) {
           console.log('parsing error: ' + error)
         } else {

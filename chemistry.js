@@ -1,8 +1,6 @@
-var mongoose = require('mongoose'),
+var mongoose = require('./mongoose'),
 	formidable = require('formidable');
 	fs = require('fs');
-mongoose.connect('mongodb://localhost/Chemistry');
-
 var Schema = new mongoose.Schema({
 	title: String,
 	content: String,
@@ -26,7 +24,7 @@ function _parseChemistry(fields) {
 		if (err) {console.log('err: ', err)}
 		else 
 			console.log('token: ', token);
-})
+		})
 	})
 }
 
@@ -59,49 +57,37 @@ function _upload(req, res, next) {
 	     var obj = JSON.stringify(files);
 	     console.log(obj);
 	     var fields_ = JSON.stringify(fields);
-	     console.log('fields: '+ fields_);
 	     if (fields) {
 	     	_parseChemistry(fields);
 	     }
-	      var srcfilepath = files.path;
+	      var srcfilepath = files.path || '';
 	      if (files.fileupload) {
 	        srcfilepath = files.fileupload.path
 	      }
 	      else if (files.files) {
 	        srcfilepath = files.files.path
 	      }
-	      else if (files.path) {
-	        srcfilepath = files.path
-	      }
-	        if (srcfilepath) { 
-	        var filePath = __dirname + '/uploads' + 'xxx.png';
-	         fs.rename(srcfilepath, filePath, function (error) {
-	          if (error) {
-	            console.log('rename error: ' + error);
-	            // res.status(404).send({'msg':'file no find'});
-	          } else {
-	           console.log('rename success filePath: ' + filePath);
-	            // res.status(201).send({'_id':fileId});
-	          }
-	        });
-	      }
-	      console.log('srcfilepath: ' + srcfilepath);
 	    
-	      console.log('parsing done: ' + files.file);
-	        if (error) {
-	          console.log('parsing error: ' + error)
-	        } else {
-	          console.log('parsing end' + files.upload);
-	        }
-	    // console.log('files: ' + obj);
-	    // response.send({'fields': fields, 'files': files});
-
+        if (srcfilepath) { 
+        var filePath = __dirname + '/uploads/' + 'xxx.png';
+         fs.rename(srcfilepath, filePath, function (error) {
+          if (error) {
+            console.log('rename error: ' + error);
+            // res.status(404).send({'msg':'file no find'});
+          } else {
+           console.log('rename success filePath: ' + filePath);
+            // res.status(201).send({'_id':fileId});
+          }
+        });
+      } 
+        if (error) {
+          console.log('parsing error: ' + error)
+        } else {
+          console.log('parsing end' + files.upload);
+        }
 	})
-
 	console.log("Request handler 'upload' was called end");
 }
-
-
 
 exports.chemistryInput = chemistryInput;
 exports.chemistry = chemistry;

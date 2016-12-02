@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>通知推送</title>
+	<p>通知推送</p>
+</head>
+<body>
+	<form action="/pushAll" method="post" enctype="multipart/form-data">
+		<div>
+			<label>请输入电话号码</label>
+			<textarea name="phone" cols="20" rows="10" placeholder="请输入电话号码"></textarea>
+		</div>
+		<div>
+			<label>请输入推送内容</label>
+			<textarea name="message" cols="50" rows="20" placeholder="请输入推送内容"></textarea>
+		</div>
+		<input type="submit" value="提交">
+	</form>
+</body>
+</html>

@@ -6,22 +6,19 @@ var http = require('http'),
     MongoClient = require('mongodb').MongoClient,
     Server = require('mongodb').Server,
     CollectionDriver = require('./collectionDriver').CollectionDriver,
-    FileDriver = require('./fileDriver').FileDriver; //<---
-
-var qiniu = require('./qiniuUpload');
-
-var xmlparser = require('express-xml-bodyparser');
-
-var chemistry = require('./chemistry');
-var share = require('./share');
-
-var bodyParser = require('body-parser');
+    FileDriver = require('./fileDriver').FileDriver, //<---
+    notification = require('./notification'),
+    qiniu = require('./qiniuUpload'),
+    xmlparser = require('express-xml-bodyparser'),
+    chemistry = require('./chemistry'),
+    share = require('./share'),
+    bodyParser = require('body-parser'),
+    formidable = require('formidable');
  
 var app = express();
 app.set('port', process.env.PORT || 3001); 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-// app.use(bodyParser());
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true, parameterLimit: 1000000}));
 
@@ -39,6 +36,42 @@ MongoClient.connect(dbUrl, function (err, db) {
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/chemistry', chemistry.chemistry);
 app.use('/chemistryInput', chemistry.chemistryInput)
+app.post('/pushAll', function (req, res) {
+  parserequest(req, res);
+
+  var form = new formidable.IncomingForm();
+  form.parse(req, function (err, fields, files) {
+    console.log(fields.message)
+    if (fields.message && !err) {
+            notification.pushNotificationInterval(fields.message);
+        // notification.pushNotification('b27e9a1c284e9d71c9ebf3e01c35eca48ca4e116e057e38b7d2d9eb3700d6e9a', fields.message || '今天心情不好')
+    }
+  })
+
+  if (req.body.message) {
+      notification.pushNotificationInterval(req.body.message);
+      // notification.pushNotification('b27e9a1c284e9d71c9ebf3e01c35eca48ca4e116e057e38b7d2d9eb3700d6e9a', req.body.message || '今天心情不好')
+    }
+  // notification.pushNotificationInterval("今天心情不好");
+
+  res.send("success").status(201)
+})
+
+app.post('/token',function (req, res) {
+    parserequest(req, res);
+    if (req.body.token) {
+          notification.saveToken(req.body.token)
+    }
+   res.send("token upload success\n").status(201)
+})
+
+// 推送
+app.get('/push',function (req, res) {
+  var file = __dirname + '/public/' + 'handleNotification.html';
+  res.sendFile(file);
+  res.status(201);
+})
+
 
 app.use('/share', share.share)
 app.get('/', function (req,res) {
@@ -75,8 +108,8 @@ function parserequest(req, res) {
   // alert('req: ' + stringify(req.data));
   // res.send(req);
   alert('req.headers: ' + stringify(req.headers));
-  alert('req.body: ' + stringify(req.body.txt));
-  alert('req.params: ' + stringify(req.params["txt"]));
+  alert('req.body: ' + stringify(req.body));
+  alert('req.params: ' + stringify(req.params));
   alert('req.url: ' + req.url);
   alert('req.originalUrl: ' + req.originalUrl);
   alert('req.query: ' + stringify(req.query));
@@ -91,14 +124,9 @@ function parserequest(req, res) {
 app.get('/key/:key', function(req, res) {
     var params = req.params;
     var key = params.key;
-
-
-  parserequest(req);
-
-
-  console.log(key);
-  console.log(req.params);
-
+    parserequest(req);
+    console.log(key);
+    console.log(req.params);
     if (key) {
       qiniu.download(req, res, key);
     } else {
@@ -282,3 +310,10 @@ app.use(function (req,res) {
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
+
+app.on('error', function (error) {
+   console.log('error: ', error);
+})
+
+
+
